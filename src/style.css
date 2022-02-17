@@ -1,0 +1,38 @@
+:root {
+    --navbar-color: #1981e6;
+    --sidebar-color: #479aeb;
+}
+
+body {
+    margin: 0;
+}
+
+#content {
+    min-height: 100vh;
+    min-width: 100vw;
+    display: grid;
+    grid-template-columns: 0.5fr 2fr;
+    grid-template-rows: 0.5fr 2fr;
+    grid-template-areas: 
+        "navbar navbar"
+        "sidebar inbox";
+}
+
+.navbar {
+    grid-area: navbar;
+    background-color: var(--navbar-color);
+}
+
+.navbar-text {
+
+}
+
+.sidebar-container {
+    grid-area: sidebar;
+    background-color: var(--sidebar-color);
+
+}
+
+.inbox-container {
+    grid-area: inbox;
+}
