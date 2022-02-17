@@ -7,12 +7,16 @@ module.exports = {
   plugins: [
     new HtmlWebpackPlugin({
       title: 'To-Do List',
+      filename: 'index.html',
+      template: 'src/template.html',
+      inject: true
     }),
   ],
   devtool: 'inline-source-map',
   output: {
     filename: 'main.js',
     path: path.resolve(__dirname, 'dist'),
+    clean: true,
   },
   module: {
     rules: [
