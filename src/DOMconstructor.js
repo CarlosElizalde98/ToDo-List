@@ -43,7 +43,7 @@ const createPage = (()=> {
         body.appendChild(sideBar);
     }
 
-    const createInbox= () => {
+    const createInbox = () => {
         const inbox = document.createElement('div');
         inbox.classList.add('inbox-container');
        
