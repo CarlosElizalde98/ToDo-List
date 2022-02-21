@@ -10,8 +10,12 @@ function constructPage() {
     const items = document.querySelectorAll(".inbox-item");
     items.forEach((item) => {item.addEventListener("click", (event) => {
         switchTabs.switchTab(item.textContent);
-        console.log(item.textContent);
     })});
+
+    const addTask = document.querySelector('.add-form');
+    addTask.addEventListener('click', () => {
+        document.querySelector('.form-popup').style.display = "block";
+    });
 };
 
 

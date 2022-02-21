@@ -4,6 +4,7 @@
     --sidebar-color: #479aeb;
     --hover-color: #1774cf;
     --hamlet-font: 'Hahmlet', serif;
+    --cancel-btn-color: #ff3333;
 }
 
 body {
@@ -63,4 +64,54 @@ body {
 
 .inbox-container {
     grid-area: inbox;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.inbox-header {
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    color: white;
+    padding-left: 10%;
+
+}
+
+.form-popup {
+    display: none;
+    padding: 12px;
+  }
+
+.form-container {
+    max-width: 300px;
+    
+}
+
+.form-container input[type=text] {
+    width: 97%;
+    height: 10%;
+    margin-bottom: 12px;
+}
+
+.form-container .submit-btn {
+    background-color: #4CAF50;
+    color: white;
+    padding: 16px 20px;
+    border: none;
+    cursor: pointer;
+    width: 50%;
+    margin-bottom:10px;
+    opacity: 0.8;
+}
+
+.form-container .cancel-btn {
+    color: white;
+    background-color: var(--cancel-btn-color);
+    padding: 16px 20px;
+    border: none;
+    cursor: pointer;
+    width:50%;
+    margin-bottom: 10px;
+    opacity: 0.8;
 }

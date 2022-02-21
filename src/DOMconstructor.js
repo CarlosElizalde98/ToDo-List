@@ -28,13 +28,16 @@ const createPage = (()=> {
         sidebarHeading.textContent = "Projects";
         sidebarHeading.classList.add("inbox-header");
 
-        const addTaskButton = addSidebarContent("Add Task");
+        const addTaskButton = addSidebarContent("Add Project");
+        addTaskButton.classList.add('add-form');
+        const form = createForm();
 
         sidebarContent.appendChild(inbox);
         sidebarContent.appendChild(today);
         sidebarContent.appendChild(thisWeek);
         sidebarContent.appendChild(sidebarHeading);
         sidebarContent.appendChild(addTaskButton);
+        sidebarContent.appendChild(form);
 
         sideBar.appendChild(sidebarContent);
         body.appendChild(sideBar);
@@ -43,6 +46,11 @@ const createPage = (()=> {
     const createInbox= () => {
         const inbox = document.createElement('div');
         inbox.classList.add('inbox-container');
+       
+        const header = document.createElement('h1');
+        header.classList.add('container-header');
+        header.textContent = "Inbox";
+        inbox.appendChild(header);
 
         body.appendChild(inbox);
     }
@@ -62,11 +70,39 @@ const createPage = (()=> {
 
     }
 
+    function createForm() {
+        const formContainer = document.createElement('div');
+        formContainer.classList.add('form-popup');
+
+        const form = document.createElement('form');
+        form.classList.add('form-container');
+        const input = document.createElement('input');
+        input.setAttribute('type', "text");
+        input.setAttribute('name', 'item-name');
+        const submitBtn = document.createElement('button');
+        submitBtn.classList.add('submit-btn');
+        submitBtn.textContent = "Submit";
+        submitBtn.setAttribute('type', "submit");
+        submitBtn.setAttribute('value', "Submit");
+        const cancelBtn = document.createElement('button');
+        cancelBtn.textContent = "Cancel";
+        cancelBtn.setAttribute('value', "Cancel");
+        cancelBtn.classList.add('cancel-btn');
+
+        form.appendChild(input);
+        form.appendChild(submitBtn);
+        form.appendChild(cancelBtn);
+        formContainer.appendChild(form);
+
+        return formContainer;
+    }
+
 
     return { createNavBar, createSideBar, createInbox };
 })();
 
 const switchTabs = (()=> {
+
     const switchTab = (item) => {
         const inbox = document.querySelector('.inbox-container');
         if (item === "Inbox") {
