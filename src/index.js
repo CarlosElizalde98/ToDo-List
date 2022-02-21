@@ -2,15 +2,12 @@ import './style.css';
 import {createPage, switchTabs } from './DOMconstructor.js';
 import { toDo } from './toDoConstructor.js';
 
-function constructPage() {
+const constructPage = (() =>{ 
     createPage.createNavBar();
     createPage.createSideBar();
     createPage.createInbox();
 
-    const items = document.querySelectorAll(".inbox-item");
-    items.forEach((item) => {item.addEventListener("click", () => {
-        switchTabs.switchTab(item.textContent);
-    })});
+    assignLinks();
 
     const addTask = document.querySelector('.add-form');
     addTask.addEventListener('click', () => {
@@ -22,8 +19,24 @@ function constructPage() {
         event.preventDefault();
         document.querySelector('.form-popup').style.display = "none";
     });
-};
+
+    const submitBtn = document.querySelector(".submit-btn");
+    submitBtn.addEventListener('click', (event)=> {
+        const form = document.querySelector('.form-text')
+        event.preventDefault();
+        createPage.addSidebarItem(form.value);
+        document.querySelector('.form-popup').style.display = "none";
+        assignLinks();
+    })
+
+    function assignLinks () {
+        const items = document.querySelectorAll(".inbox-item");
+        items.forEach((item) => {item.addEventListener("click", () => {
+            switchTabs.switchTab(item.textContent);
+        })});
+    };
+})();
 
 
 
-constructPage();
+// constructPage();

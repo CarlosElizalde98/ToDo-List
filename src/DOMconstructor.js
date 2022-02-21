@@ -43,6 +43,12 @@ const createPage = (()=> {
         body.appendChild(sideBar);
     }
 
+    const addSidebarItem = (item) => {
+        const newItem = addSidebarContent(item);
+        const sidebarContent = document.querySelector('.sidebar-content');
+        sidebarContent.appendChild(newItem);
+    }
+
     const createInbox = () => {
         const inbox = document.createElement('div');
         inbox.classList.add('inbox-container');
@@ -79,7 +85,8 @@ const createPage = (()=> {
         const input = document.createElement('input');
         input.setAttribute('type', "text");
         input.setAttribute('name', 'item-name');
-        const submitBtn = document.createElement('button');
+        input.classList.add('form-text')
+        const submitBtn = document.createElement('input');
         submitBtn.classList.add('submit-btn');
         submitBtn.textContent = "Submit";
         submitBtn.setAttribute('type', "submit");
@@ -98,34 +105,18 @@ const createPage = (()=> {
     }
 
 
-    return { createNavBar, createSideBar, createInbox };
+    return { createNavBar, createSideBar, createInbox, addSidebarItem };
 })();
 
 const switchTabs = (()=> {
 
     const switchTab = (item) => {
         const inbox = document.querySelector('.inbox-container');
-        if (item === "Inbox") {
             inbox.innerHTML = "";
             const header = document.createElement('h1');
             header.classList.add('container-header');
-            header.textContent = "Inbox";
+            header.textContent = item;
             inbox.appendChild(header);
-        }
-        else if (item === "Today") {
-            inbox.innerHTML = "";
-            const header = document.createElement('h1');
-            header.classList.add('container-header');
-            header.textContent = "Today";
-            inbox.appendChild(header);
-        }
-        else if (item === "This Week"){
-            inbox.innerHTML = "";
-            const header = document.createElement('h1');
-            header.classList.add('container-header');
-            header.textContent = "This Week";
-            inbox.appendChild(header);
-        }
     }
 
     return { switchTab }
