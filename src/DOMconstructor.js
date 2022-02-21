@@ -26,7 +26,7 @@ const createPage = (()=> {
 
         const sidebarHeading = document.createElement('h2');
         sidebarHeading.textContent = "Projects";
-        sidebarHeading.classList.add("inbox-item");
+        sidebarHeading.classList.add("inbox-header");
 
         const addTaskButton = addSidebarContent("Add Task");
 
@@ -66,4 +66,33 @@ const createPage = (()=> {
     return { createNavBar, createSideBar, createInbox };
 })();
 
-export { createPage }
+const switchTabs = (()=> {
+    const switchTab = (item) => {
+        const inbox = document.querySelector('.inbox-container');
+        if (item === "Inbox") {
+            inbox.innerHTML = "";
+            const header = document.createElement('h1');
+            header.classList.add('container-header');
+            header.textContent = "Inbox";
+            inbox.appendChild(header);
+        }
+        else if (item === "Today") {
+            inbox.innerHTML = "";
+            const header = document.createElement('h1');
+            header.classList.add('container-header');
+            header.textContent = "Today";
+            inbox.appendChild(header);
+        }
+        else if (item === "This Week"){
+            inbox.innerHTML = "";
+            const header = document.createElement('h1');
+            header.classList.add('container-header');
+            header.textContent = "This Week";
+            inbox.appendChild(header);
+        }
+    }
+
+    return { switchTab }
+})()
+
+export { createPage, switchTabs }

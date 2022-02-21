@@ -2,6 +2,7 @@
 :root {
     --navbar-color: #1981e6;
     --sidebar-color: #479aeb;
+    --hover-color: #1774cf;
     --hamlet-font: 'Hahmlet', serif;
 }
 
@@ -48,9 +49,16 @@ body {
     grid-row: 2;
 }
 .inbox-item {
-    place-self: start;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     color: white;
-    padding-left: 10%;
+    min-height:100%;
+    min-width:100%;
+}
+
+.inbox-item:hover {
+    background-color: var(--hover-color);
 }
 
 .inbox-container {
