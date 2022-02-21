@@ -17,8 +17,26 @@ const createPage = (()=> {
     const createSideBar = () => {
         const sideBar = document.createElement('div');
         sideBar.classList.add('sidebar-container');
+        const sidebarContent = document.createElement('div');
+        sidebarContent.classList.add('sidebar-content');
 
+        const inbox = addSidebarContent("Inbox");
+        const today = addSidebarContent("Today");
+        const thisWeek = addSidebarContent("This Week");
 
+        const sidebarHeading = document.createElement('h2');
+        sidebarHeading.textContent = "Projects";
+        sidebarHeading.classList.add("inbox-item");
+
+        const addTaskButton = addSidebarContent("Add Task");
+
+        sidebarContent.appendChild(inbox);
+        sidebarContent.appendChild(today);
+        sidebarContent.appendChild(thisWeek);
+        sidebarContent.appendChild(sidebarHeading);
+        sidebarContent.appendChild(addTaskButton);
+
+        sideBar.appendChild(sidebarContent);
         body.appendChild(sideBar);
     }
 
@@ -34,6 +52,16 @@ const createPage = (()=> {
         navbarText.textContent = "To-Do List";
         return navbarText;
     };
+
+    function addSidebarContent(heading) {
+        const option = document.createElement('div');
+        option.classList.add('inbox-item');
+        option.textContent = heading;
+
+        return option;
+
+    }
+
 
     return { createNavBar, createSideBar, createInbox };
 })();

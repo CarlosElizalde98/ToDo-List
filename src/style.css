@@ -38,7 +38,19 @@ body {
 .sidebar-container {
     grid-area: sidebar;
     background-color: var(--sidebar-color);
+    display: grid;
+    grid-template-rows: 50px 2fr;
+}
 
+.sidebar-content {
+    display: grid;
+    grid-template-rows: repeat(3, 50px) 100px 100px;
+    grid-row: 2;
+}
+.inbox-item {
+    place-self: start;
+    color: white;
+    padding-left: 10%;
 }
 
 .inbox-container {
