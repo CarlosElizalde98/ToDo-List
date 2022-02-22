@@ -119,7 +119,14 @@ const switchTabs = (()=> {
             inbox.appendChild(header);
     }
 
-    return { switchTab }
+    const assignLinks = () => {
+        const items = document.querySelectorAll(".inbox-item");
+        items.forEach((item) => {item.addEventListener("click", () => {
+            switchTabs.switchTab(item.textContent);
+        })});
+    };
+
+    return { switchTab, assignLinks }
 })()
 
 export { createPage, switchTabs }
