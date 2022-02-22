@@ -51,7 +51,7 @@ body {
 
     grid-row: 2;
 }
-.inbox-item {
+.sidebar-item {
     display: flex;
     justify-content: start;
     align-items: center;
@@ -62,7 +62,11 @@ body {
     width:100%;
 }
 
-.inbox-item:hover {
+.sidebar-item > .inbox-item {
+    color: black;
+    border: 2px solid black;
+}
+.sidebar-item:hover {
     background-color: var(--hover-color);
 }
 
@@ -78,11 +82,23 @@ body {
     justify-content: start;
     align-items: center;
     color: white;
-    
-
 }
 
-.form-popup {
+.inbox-item {
+    min-width: 50%;
+    display: flex;
+    justify-content: start;
+    padding-left: 10px;
+    border: 2px solid black;
+}
+
+.inbox-item:hover {
+    background-color: var(--sidebar-color);
+    color: white;
+    border: 2px solid white;
+}
+
+.form-popup, .add-item-form {
     display: none;
     padding: 12px;
   }

@@ -7,11 +7,17 @@ const constructPage = (() =>{
     createPage.createSideBar();
     createPage.createInbox();
 
+    switchTabs.assignLinks();
     addEventListeners();
 
     function addEventListeners() {
-        const addTask = document.querySelector('.add-form');
+        const addTask = document.querySelector('.inbox-item');
         addTask.addEventListener('click', () => {
+            document.querySelector('.add-item-form').style.display = "block";
+        });
+
+        const addProject = document.querySelector('.add-form');
+        addProject.addEventListener('click', () => {
             document.querySelector('.form-popup').style.display = "block";
         });
 

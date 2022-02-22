@@ -20,23 +20,23 @@ const createPage = (()=> {
         const sidebarContent = document.createElement('div');
         sidebarContent.classList.add('sidebar-content');
 
-        const inbox = addSidebarContent("Inbox");
-        const today = addSidebarContent("Today");
-        const thisWeek = addSidebarContent("This Week");
+        const inbox = addTaskButton("Inbox");
+        const today = addTaskButton("Today");
+        const thisWeek = addTaskButton("This Week");
 
         const sidebarHeading = document.createElement('h2');
         sidebarHeading.textContent = "Projects";
         sidebarHeading.classList.add("inbox-header");
 
-        const addTaskButton = addSidebarContent("Add Project");
-        addTaskButton.classList.add('add-form');
+        const taskButton = addTaskButton("Add Project");
+        taskButton.classList.add('add-form');
         const form = createForm();
 
         sidebarContent.appendChild(inbox);
         sidebarContent.appendChild(today);
         sidebarContent.appendChild(thisWeek);
         sidebarContent.appendChild(sidebarHeading);
-        sidebarContent.appendChild(addTaskButton);
+        sidebarContent.appendChild(taskButton);
         sidebarContent.appendChild(form);
 
         sideBar.appendChild(sidebarContent);
@@ -44,9 +44,15 @@ const createPage = (()=> {
     }
 
     const addSidebarItem = (item) => {
-        const newItem = addSidebarContent(item);
+        const newItem = addTaskButton(item);
         const sidebarContent = document.querySelector('.sidebar-content');
         sidebarContent.appendChild(newItem);
+    }
+     
+    const addInboxItem = (item) => {
+        const newItem = addTaskButton(item);
+        const inboxContent = document.querySelector(".inbox-container");
+        inboxContent.appendChild(newItem);
     }
 
     const createInbox = () => {
@@ -56,7 +62,16 @@ const createPage = (()=> {
         const header = document.createElement('h1');
         header.classList.add('container-header');
         header.textContent = "Inbox";
+
+        const taskButton = addTaskButton("Add Task");
+        taskButton.classList.remove(...taskButton.classList);
+        taskButton.classList.add('inbox-item');
+        const form = createForm();
+        form.classList.add('add-item-form');
+
         inbox.appendChild(header);
+        inbox.appendChild(taskButton);
+        inbox.appendChild(form);
 
         body.appendChild(inbox);
     }
@@ -67,9 +82,9 @@ const createPage = (()=> {
         return navbarText;
     };
 
-    function addSidebarContent(heading) {
+    function addTaskButton(heading) {
         const option = document.createElement('div');
-        option.classList.add('inbox-item');
+        option.classList.add('sidebar-item');
         option.textContent = heading;
 
         return option;
@@ -105,22 +120,32 @@ const createPage = (()=> {
     }
 
 
-    return { createNavBar, createSideBar, createInbox, addSidebarItem };
+    return { createNavBar, createSideBar, createInbox, addSidebarItem, addInboxItem };
 })();
 
 const switchTabs = (()=> {
 
     const switchTab = (item) => {
         const inbox = document.querySelector('.inbox-container');
+            // inbox.innerHTML = "";
+            if (item === "Inbox") {
+                inbox.innerHTML = "";
+                const header = document.createElement('h1');
+                header.classList.add('container-header');
+                header.textContent = item;
+                inbox.appendChild(header);
+                createPage.addInboxItem(item);
+            }
             inbox.innerHTML = "";
             const header = document.createElement('h1');
             header.classList.add('container-header');
             header.textContent = item;
             inbox.appendChild(header);
+            
     }
 
     const assignLinks = () => {
-        const items = document.querySelectorAll(".inbox-item");
+        const items = document.querySelectorAll(".sidebar-item");
         items.forEach((item) => {item.addEventListener("click", () => {
             switchTabs.switchTab(item.textContent);
         })});
