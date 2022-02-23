@@ -1,5 +1,6 @@
 import './style.css';
-import {createPage, switchTabs } from './DOMconstructor.js';
+import {createPage} from './DOMconstructor.js';
+import {switchTabs} from './switchTabs.js';
 import { toDo } from './toDoConstructor.js';
 
 const constructPage = (() =>{ 
