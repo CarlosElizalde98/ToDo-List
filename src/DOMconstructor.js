@@ -49,10 +49,18 @@ const createPage = (()=> {
         sidebarContent.appendChild(newItem);
     }
      
-    const addInboxItem = (item) => {
-        const newItem = addTaskButton(item);
-        const inboxContent = document.querySelector(".inbox-container");
-        inboxContent.appendChild(newItem);
+    const addInboxItem = (inbox, header) => {
+        // const newItem = addInboxButton(item);
+        // const inboxContent = document.querySelector(".inbox-container");
+        // inboxContent.appendChild(newItem);
+
+        const taskButton = addInboxButton("Add Task");
+        taskButton.classList.add('add-taskform');
+        const form = createForms.createTaskForm();
+
+        inbox.appendChild(header);
+        inbox.appendChild(taskButton);
+        inbox.appendChild(form);
     }
 
     const createInbox = () => {
@@ -111,23 +119,79 @@ const switchTabs = (()=> {
                 const header = document.createElement('h1');
                 header.classList.add('container-header');
                 header.textContent = item;
-                inbox.appendChild(header);
-                createPage.addInboxItem(item);
+                // inbox.appendChild(header);
+                // createPage.addInboxItem(item);
+                createPage.addInboxItem(inbox, header);
             }
             inbox.innerHTML = "";
+            inbox.textContent = "";
             const header = document.createElement('h1');
             header.classList.add('container-header');
             header.textContent = item;
             inbox.appendChild(header);
-            
+            createPage.addInboxItem(inbox, header);
     }
 
     const assignLinks = () => {
         const items = document.querySelectorAll(".sidebar-item");
         items.forEach((item) => {item.addEventListener("click", () => {
             switchTabs.switchTab(item.textContent);
+            addEventListeners();
         })});
     };
+
+    function addEventListeners() {
+        const addTask = document.querySelector('.add-taskform');
+        const taskBtn = document.querySelector('.add-taskform');
+        const taskForm = document.querySelector('.item-form-popup');
+        const taskFormContainer = document.querySelector('.item-form-container');
+
+        addTask.addEventListener('click', () => {
+            taskBtn.classList.toggle("item-form-popup");
+            taskForm.classList.toggle("item-form-popup-active");
+        });
+
+        const addProject = document.querySelector('.add-sidebar-form');
+        addProject.addEventListener('click', () => {
+            document.querySelector('.form-popup').style.display = "block";
+        });
+
+        const cancelbtn = document.querySelector(".cancel-btn");
+        cancelbtn.addEventListener('click', (event) => {
+            event.preventDefault();
+            document.querySelector('.form-popup').style.display = "none";
+        });
+
+        const itemCancelBtn = document.querySelector(".item-cancel-btn");
+        itemCancelBtn.addEventListener('click',(event) => {
+            event.preventDefault();
+            taskBtn.classList.remove("item-form-popup");
+            taskForm.classList.remove("item-form-popup-active");
+
+        })
+
+        const submitBtn = document.querySelector(".submit-btn");
+        submitBtn.addEventListener('click', (event)=> {
+            const form = document.querySelector('.form-text')
+            event.preventDefault();
+            createPage.addSidebarItem(form.value);
+            document.querySelector('.form-popup').style.display = "none";
+            switchTabs.assignLinks();
+        })
+
+        const itemSubmitBtn = document.querySelector(".item-submit-btn");
+        itemSubmitBtn.addEventListener('click', (event)=> {
+            event.preventDefault();
+            const title = document.getElementById("title").value;
+            const description = document.getElementById("description").value;
+            const dueDate = document.getElementById("dueDate").value;
+            const priority = document.getElementById("priorities").value;
+            const newTask = toDo.createTask(title, description, dueDate, priority);
+            console.log(newTask);
+            taskFormContainer.reset()
+
+        })
+    }
 
     return { switchTab, assignLinks }
 })();
@@ -135,11 +199,15 @@ const switchTabs = (()=> {
 const createForms = (() => {
 
     function createProjectForm() {
+        // Create Form Popup container
         const formContainer = document.createElement('div');
         formContainer.classList.add('form-popup');
 
+        // Creates Form Container
         const form = document.createElement('form');
         form.classList.add('form-container');
+
+        // Creates Form Contents
         const input = document.createElement('input');
         input.setAttribute('type', "text");
         input.setAttribute('name', 'item-name');
@@ -154,6 +222,7 @@ const createForms = (() => {
         cancelBtn.setAttribute('value', "Cancel");
         cancelBtn.classList.add('cancel-btn');
 
+        // Appends to DOM
         form.appendChild(input);
         form.appendChild(submitBtn);
         form.appendChild(cancelBtn);
@@ -163,29 +232,36 @@ const createForms = (() => {
     }
 
     function createTaskForm() {
+        // Creates Form Popup Container
         const taskFormContainer = document.createElement('div');
         taskFormContainer.classList.add('item-form-popup');
         
         const taskForm = document.createElement('form');
         taskForm.classList.add('item-form-container');
 
+        //Manages Title input area
         const taskInput = document.createElement('input');
         taskInput.setAttribute('type', "text");
         taskInput.setAttribute('name', "item-name");
-        taskInput.setAttribute('placeholder', "Name");
+        taskInput.setAttribute('id', "title");
+        taskInput.setAttribute('placeholder', "Title");
         taskInput.classList.add('item-form-text');
 
+        //Manages Description Input Area
         const taskDescInput = document.createElement('input');
         taskDescInput.setAttribute('type', "text");
         taskDescInput.setAttribute('name', "description");
-        taskDescInput.setAttribute('placeholder', "Description")
+        taskDescInput.setAttribute('id', "description");
+        taskDescInput.setAttribute('placeholder', "Description (Optional)")
         taskDescInput.classList.add('item-form-text');
 
+        //Manages Priority Datalist area
         const priorityInput = document.createElement('input');
         priorityInput.setAttribute('list', "priorities");
         priorityInput.setAttribute('placeholder', "Priority")
+        priorityInput.setAttribute('id', "priorities")
         const priorityInputList = document.createElement("datalist");
-        priorityInputList.setAttribute('id', "priorities")
+        priorityInputList.setAttribute('id', "priorities-datalist")
         const lowPriority = document.createElement("option");
         lowPriority.setAttribute("value", "Low");
         const medPriority = document.createElement("option");
@@ -195,12 +271,15 @@ const createForms = (() => {
         priorityInputList.appendChild(lowPriority);
         priorityInputList.appendChild(medPriority);
         priorityInputList.appendChild(highPriority);
-        // priorityInput.append(priorityInputList);
-
+        
+        
+        //Manages Data Area
         const taskDate = document.createElement('input');
         taskDate.setAttribute('type', "date");
         taskDate.setAttribute('name', "due-date");
+        taskDate.setAttribute('id', "dueDate");
 
+        // Manages button creation for Form
         const submitBtn = document.createElement('button');
         submitBtn.classList.add('item-submit-btn');
         submitBtn.textContent = "Submit";

@@ -5,6 +5,7 @@
     --hover-color: #1774cf;
     --hamlet-font: 'Hahmlet', serif;
     --cancel-btn-color: #ff3333;
+    --submit-btn-color: #1aff8c;
 }
 
 body {
@@ -42,7 +43,7 @@ body {
     background-color: var(--sidebar-color);
     display: grid;
     padding: 10%;
-    grid-template-rows: 50px 2fr;
+    grid-template-rows: 25px 1fr;
 }
 
 .sidebar-content {
@@ -85,11 +86,12 @@ body {
 }
 
 .inbox-item {
-    min-width: 50%;
+    min-width: 70%;
     display: flex;
     justify-content: start;
     padding-left: 10px;
-    border: 2px solid black;
+    border: 2px solid var(--navbar-color);
+    border-radius: 12px;
 }
 
 .inbox-item:hover {
@@ -108,14 +110,17 @@ body {
     
 }
 
-.form-container input[type=text] {
+input[type=text] {
+    border-style: none;
     width: 97%;
     height: 10%;
     margin-bottom: 12px;
+    border-radius: 12px;
+    padding: 10px;
 }
 
 .form-container .submit-btn, .item-submit-btn {
-    background-color: #4CAF50;
+    background-color: var(--submit-btn-color);
     color: white;
     padding: 16px 20px;
     border: none;
@@ -123,6 +128,7 @@ body {
     width: 50%;
     margin-bottom:10px;
     opacity: 0.8;
+    border-radius: 12px;
 }
 
 .form-container .cancel-btn, .item-cancel-btn {
@@ -134,6 +140,7 @@ body {
     width:50%;
     margin-bottom: 10px;
     opacity: 0.8;
+    border-radius: 12px;
 }
 
 .item-form-popup {
@@ -141,14 +148,20 @@ body {
 }
 
 .item-form-popup-active {
-    display: block;
-    border: 2px solid black;
+    display: flex;
+    justify-content: center;
+    border: 2px solid white;
     background-color: var(--sidebar-color);
     color: white;
+    width: 400px;
+    height: 350px;
+    border-radius: 12px;
+    padding: 2%;
 }
 
 .item-form-container {
     display: flex;
     flex-direction: column;
+    justify-content: space-between;
     padding: 10px;
 }
