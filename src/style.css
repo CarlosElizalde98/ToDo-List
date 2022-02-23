@@ -114,7 +114,7 @@ body {
     margin-bottom: 12px;
 }
 
-.form-container .submit-btn {
+.form-container .submit-btn, .item-submit-btn {
     background-color: #4CAF50;
     color: white;
     padding: 16px 20px;
@@ -125,7 +125,7 @@ body {
     opacity: 0.8;
 }
 
-.form-container .cancel-btn {
+.form-container .cancel-btn, .item-cancel-btn {
     color: white;
     background-color: var(--cancel-btn-color);
     padding: 16px 20px;
@@ -134,4 +134,14 @@ body {
     width:50%;
     margin-bottom: 10px;
     opacity: 0.8;
+}
+
+.item-form-popup {
+    display: none;
+}
+
+.item-form-popup:active {
+    display: flex;
+    flex-direction: column;
+    
 }

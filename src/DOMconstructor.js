@@ -30,7 +30,7 @@ const createPage = (()=> {
 
         const taskButton = addTaskButton("Add Project");
         taskButton.classList.add('add-sidebar-form');
-        const form = createForm();
+        const form = createForms.createProjectForm();
 
         sidebarContent.appendChild(inbox);
         sidebarContent.appendChild(today);
@@ -96,35 +96,6 @@ const createPage = (()=> {
 
         return option;
     }
-
-    function createForm() {
-        const formContainer = document.createElement('div');
-        formContainer.classList.add('form-popup');
-
-        const form = document.createElement('form');
-        form.classList.add('form-container');
-        const input = document.createElement('input');
-        input.setAttribute('type', "text");
-        input.setAttribute('name', 'item-name');
-        input.classList.add('form-text')
-        const submitBtn = document.createElement('input');
-        submitBtn.classList.add('submit-btn');
-        submitBtn.textContent = "Submit";
-        submitBtn.setAttribute('type', "submit");
-        submitBtn.setAttribute('value', "Submit");
-        const cancelBtn = document.createElement('button');
-        cancelBtn.textContent = "Cancel";
-        cancelBtn.setAttribute('value', "Cancel");
-        cancelBtn.classList.add('cancel-btn');
-
-        form.appendChild(input);
-        form.appendChild(submitBtn);
-        form.appendChild(cancelBtn);
-        formContainer.appendChild(form);
-
-        return formContainer;
-    }
-
 
     return { createNavBar, createSideBar, createInbox, addSidebarItem, addInboxItem };
 })();
@@ -200,25 +171,30 @@ const createForms = (() => {
         const taskInput = document.createElement('input');
         taskInput.setAttribute('type', "text");
         taskInput.setAttribute('name', "item-name");
+        taskInput.setAttribute('placeholder', "Name");
         taskInput.classList.add('item-form-text');
 
         const taskDescInput = document.createElement('input');
         taskDescInput.setAttribute('type', "text");
         taskDescInput.setAttribute('name', "description");
+        taskDescInput.setAttribute('placeholder', "Description")
         taskDescInput.classList.add('item-form-text');
 
-        const priorityInput = document.createElement('datalist');
-        // const priorityInputList = document.createElement("datalist");
+        const priorityInput = document.createElement('input');
+        priorityInput.setAttribute('list', "priorities");
+        priorityInput.setAttribute('placeholder', "Priority")
+        const priorityInputList = document.createElement("datalist");
+        priorityInputList.setAttribute('id', "priorities")
         const lowPriority = document.createElement("option");
-        lowPriority.setAttribute("value", "low");
+        lowPriority.setAttribute("value", "Low");
         const medPriority = document.createElement("option");
         medPriority.setAttribute('value', "Medium");
         const highPriority = document.createElement("option");
-        highPriority.setAttribute('value',"high");
-        priorityInput.appendChild(lowPriority);
-        priorityInput.appendChild(medPriority);
-        priorityInput.appendChild(highPriority);
-        // priorityInput.appendChild(priorityInputList);
+        highPriority.setAttribute('value',"High");
+        priorityInputList.appendChild(lowPriority);
+        priorityInputList.appendChild(medPriority);
+        priorityInputList.appendChild(highPriority);
+        // priorityInput.append(priorityInputList);
 
         const taskDate = document.createElement('input');
         taskDate.setAttribute('type', "date");
@@ -237,6 +213,7 @@ const createForms = (() => {
         taskForm.appendChild(taskInput);
         taskForm.appendChild(taskDescInput);
         taskForm.appendChild(priorityInput);
+        taskForm.appendChild(priorityInputList);
         taskForm.appendChild(taskDate);
         taskForm.appendChild(submitBtn);
         taskForm.appendChild(cancelBtn);
