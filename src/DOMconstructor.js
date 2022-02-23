@@ -64,6 +64,7 @@ const createPage = (()=> {
         header.textContent = "Inbox";
 
         const taskButton = addInboxButton("Add Task");
+        taskButton.classList.add('add-taskform');
         const form = createForms.createTaskForm();
         
 

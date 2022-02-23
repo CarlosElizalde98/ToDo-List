@@ -9,11 +9,12 @@ const constructPage = (() =>{
 
     switchTabs.assignLinks();
     addEventListeners();
-    
+
     function addEventListeners() {
-        const addTask = document.querySelector('.inbox-item');
+        const addTask = document.querySelector('.add-taskform');
         addTask.addEventListener('click', () => {
-            document.querySelector('.add-item-form').style.display = "block";
+            const taskBtn = document.querySelector('.item-form-popup');
+            taskBtn.classList.toggle("item-form-popup-active");
         });
 
         const addProject = document.querySelector('.add-sidebar-form');
