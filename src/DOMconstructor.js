@@ -63,9 +63,7 @@ const createPage = (()=> {
         header.classList.add('container-header');
         header.textContent = "Inbox";
 
-        const taskButton = addTaskButton("Add Task");
-        taskButton.classList.remove(...taskButton.classList);
-        taskButton.classList.add('inbox-item');
+        const taskButton = addInboxButton("Add Task");
         const form = createForm();
         form.classList.add('add-item-form');
 
@@ -89,6 +87,14 @@ const createPage = (()=> {
 
         return option;
 
+    }
+
+    function addInboxButton(heading) {
+        const option = document.createElement('div');
+        option.classList.add('inbox-item');
+        option.textContent = heading;
+
+        return option;
     }
 
     function createForm() {
