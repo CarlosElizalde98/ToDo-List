@@ -29,7 +29,7 @@ const createPage = (()=> {
         sidebarHeading.classList.add("inbox-header");
 
         const taskButton = addTaskButton("Add Project");
-        taskButton.classList.add('add-form');
+        taskButton.classList.add('add-sidebar-form');
         const form = createForm();
 
         sidebarContent.appendChild(inbox);
@@ -64,8 +64,8 @@ const createPage = (()=> {
         header.textContent = "Inbox";
 
         const taskButton = addInboxButton("Add Task");
-        const form = createForm();
-        form.classList.add('add-item-form');
+        const form = createForms.createTaskForm();
+        
 
         inbox.appendChild(header);
         inbox.appendChild(taskButton);
@@ -158,6 +158,93 @@ const switchTabs = (()=> {
     };
 
     return { switchTab, assignLinks }
-})()
+})();
+
+const createForms = (() => {
+
+    function createProjectForm() {
+        const formContainer = document.createElement('div');
+        formContainer.classList.add('form-popup');
+
+        const form = document.createElement('form');
+        form.classList.add('form-container');
+        const input = document.createElement('input');
+        input.setAttribute('type', "text");
+        input.setAttribute('name', 'item-name');
+        input.classList.add('form-text')
+        const submitBtn = document.createElement('input');
+        submitBtn.classList.add('submit-btn');
+        submitBtn.textContent = "Submit";
+        submitBtn.setAttribute('type', "submit");
+        submitBtn.setAttribute('value', "Submit");
+        const cancelBtn = document.createElement('button');
+        cancelBtn.textContent = "Cancel";
+        cancelBtn.setAttribute('value', "Cancel");
+        cancelBtn.classList.add('cancel-btn');
+
+        form.appendChild(input);
+        form.appendChild(submitBtn);
+        form.appendChild(cancelBtn);
+        formContainer.appendChild(form);
+
+        return formContainer;
+    }
+
+    function createTaskForm() {
+        const taskFormContainer = document.createElement('div');
+        taskFormContainer.classList.add('item-form-popup');
+        
+        const taskForm = document.createElement('form');
+        taskForm.classList.add('item-form-container');
+
+        const taskInput = document.createElement('input');
+        taskInput.setAttribute('type', "text");
+        taskInput.setAttribute('name', "item-name");
+        taskInput.classList.add('item-form-text');
+
+        const taskDescInput = document.createElement('input');
+        taskDescInput.setAttribute('type', "text");
+        taskDescInput.setAttribute('name', "description");
+        taskDescInput.classList.add('item-form-text');
+
+        const priorityInput = document.createElement('datalist');
+        // const priorityInputList = document.createElement("datalist");
+        const lowPriority = document.createElement("option");
+        lowPriority.setAttribute("value", "low");
+        const medPriority = document.createElement("option");
+        medPriority.setAttribute('value', "Medium");
+        const highPriority = document.createElement("option");
+        highPriority.setAttribute('value',"high");
+        priorityInput.appendChild(lowPriority);
+        priorityInput.appendChild(medPriority);
+        priorityInput.appendChild(highPriority);
+        // priorityInput.appendChild(priorityInputList);
+
+        const taskDate = document.createElement('input');
+        taskDate.setAttribute('type', "date");
+        taskDate.setAttribute('name', "due-date");
+
+        const submitBtn = document.createElement('button');
+        submitBtn.classList.add('item-submit-btn');
+        submitBtn.textContent = "Submit";
+        submitBtn.setAttribute('type', "submit");
+        submitBtn.setAttribute('value', "Submit");
+        const cancelBtn = document.createElement('button');
+        cancelBtn.textContent = "Cancel";
+        cancelBtn.setAttribute('value', "Cancel");
+        cancelBtn.classList.add('item-cancel-btn');
+
+        taskForm.appendChild(taskInput);
+        taskForm.appendChild(taskDescInput);
+        taskForm.appendChild(priorityInput);
+        taskForm.appendChild(taskDate);
+        taskForm.appendChild(submitBtn);
+        taskForm.appendChild(cancelBtn);
+
+        taskFormContainer.appendChild(taskForm);
+        return taskFormContainer;
+    }
+    return {createProjectForm, createTaskForm};
+})();
 
 export { createPage, switchTabs }

@@ -9,14 +9,14 @@ const constructPage = (() =>{
 
     switchTabs.assignLinks();
     addEventListeners();
-
+    
     function addEventListeners() {
         const addTask = document.querySelector('.inbox-item');
         addTask.addEventListener('click', () => {
             document.querySelector('.add-item-form').style.display = "block";
         });
 
-        const addProject = document.querySelector('.add-form');
+        const addProject = document.querySelector('.add-sidebar-form');
         addProject.addEventListener('click', () => {
             document.querySelector('.form-popup').style.display = "block";
         });
@@ -26,6 +26,7 @@ const constructPage = (() =>{
             event.preventDefault();
             document.querySelector('.form-popup').style.display = "none";
         });
+
 
         const submitBtn = document.querySelector(".submit-btn");
         submitBtn.addEventListener('click', (event)=> {
@@ -41,5 +42,3 @@ const constructPage = (() =>{
 })();
 
 
-
-// constructPage();
