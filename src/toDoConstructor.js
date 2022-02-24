@@ -46,6 +46,16 @@ const toDo = (() => {
         return taskCard;
     }
 
-    return {createTask, createTaskCard};
+    const setTaskData = (title, taskCard) => {
+        localStorage.setItem(title, JSON.stringify(taskCard));
+    }
+
+    function getTaskData(title) {
+        const myTaskCard = JSON.parse(localStorage.getItem(title));
+        console.log(myTaskCard);
+        return myTaskCard;
+    }
+
+    return {createTask, createTaskCard, setTaskData, getTaskData};
 })();
 export { toDo };

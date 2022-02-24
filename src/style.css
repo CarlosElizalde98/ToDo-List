@@ -165,3 +165,31 @@ input[type=text] {
     justify-content: space-between;
     padding: 10px;
 }
+
+.task-card-container {
+    display: flex;
+    justify-content: space-between;
+    margin: 12px;
+    padding: 12px;
+    align-items: center;
+    width: 50%;
+    height: 50px;
+    border: 2px solid var(--navbar-color);
+    border-radius: 12px;
+}
+
+.taskcard-title {
+    flex: 1 0 auto;
+}
+
+.taskcard-description {
+    flex: 1 0 auto;
+}
+
+.taskcard-date {
+    flex: 1 0 auto;
+}
+
+.taskcard-priority {
+    flex: 1 0 auto;
+}

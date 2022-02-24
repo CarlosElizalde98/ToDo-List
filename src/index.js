@@ -10,6 +10,7 @@ const constructPage = (() =>{
 
     switchTabs.assignLinks();
     
+    createPage.checkLocalStorage();
 })();
 
 

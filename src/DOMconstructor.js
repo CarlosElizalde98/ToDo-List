@@ -1,4 +1,4 @@
-
+import {toDo} from './toDoConstructor.js';
 const createPage = (()=> {
     const body = document.querySelector('#content');
 
@@ -62,6 +62,14 @@ const createPage = (()=> {
         inbox.appendChild(header);
         inbox.appendChild(taskButton);
         inbox.appendChild(form);
+
+        if (localStorage.length > 0) {
+            for (let i = 0; i < localStorage.length; i++){
+                let task = toDo.getTaskData(localStorage.key(i));
+                let taskObject = toDo.createTaskCard(task);
+                addTaskCard(taskObject);
+            }
+        }
     }
 
     const addTaskCard = (taskCard) => {
@@ -82,7 +90,7 @@ const createPage = (()=> {
         taskButton.classList.add('add-taskform');
         const form = createForms.createTaskForm();
         
-
+        
         inbox.appendChild(header);
         inbox.appendChild(taskButton);
         inbox.appendChild(form);
@@ -113,8 +121,19 @@ const createPage = (()=> {
         return option;
     }
 
+    const checkLocalStorage = () => {
+        if (localStorage.length > 0) {
+            for (let i = 0; i < localStorage.length; i++){
+                let task = toDo.getTaskData(localStorage.key(i));
+                let taskObject = toDo.createTaskCard(task);
+                addTaskCard(taskObject);
+            }
+        }
+    }
 
-    return { createNavBar, createSideBar, createInbox, addSidebarItem, addInboxItem, addTaskCard };
+
+    return { createNavBar, createSideBar, createInbox, 
+        addSidebarItem, addInboxItem, addTaskCard, checkLocalStorage };
 })();
 
 const createForms = (() => {
