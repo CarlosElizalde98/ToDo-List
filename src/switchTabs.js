@@ -82,8 +82,11 @@ const switchTabs = (()=> {
             const dueDate = document.getElementById("dueDate").value;
             const priority = document.getElementById("priorities").value;
             const newTask = toDo.createTask(title, description, dueDate, priority);
-            console.log(newTask);
             taskFormContainer.reset()
+            taskBtn.classList.remove("item-form-popup");
+            taskForm.classList.remove("item-form-popup-active");
+            const taskCard = toDo.createTaskCard(newTask);
+            createPage.addTaskCard(taskCard);
 
         })
 

@@ -64,6 +64,12 @@ const createPage = (()=> {
         inbox.appendChild(form);
     }
 
+    const addTaskCard = (taskCard) => {
+        const inbox = document.querySelector('.inbox-container');
+        const taskFormButton = document.querySelector('.add-taskform');
+        inbox.insertBefore(taskCard, taskFormButton);
+    }
+
     const createInbox = () => {
         const inbox = document.createElement('div');
         inbox.classList.add('inbox-container');
@@ -108,7 +114,7 @@ const createPage = (()=> {
     }
 
 
-    return { createNavBar, createSideBar, createInbox, addSidebarItem, addInboxItem };
+    return { createNavBar, createSideBar, createInbox, addSidebarItem, addInboxItem, addTaskCard };
 })();
 
 const createForms = (() => {
