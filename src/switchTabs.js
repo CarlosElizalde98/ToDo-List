@@ -1,32 +1,37 @@
 import {createPage } from './DOMconstructor.js';
+import {toDo} from './toDoConstructor.js';
+
 const switchTabs = (()=> {
 
     const switchTab = (item) => {
         const inbox = document.querySelector('.inbox-container');
             // inbox.innerHTML = "";
-            if (item === "Inbox") {
+            if (item == "Inbox") {
                 inbox.innerHTML = "";
-                const header = document.createElement('h1');
-                header.classList.add('container-header');
-                header.textContent = item;
+                const inboxHeader = document.createElement('h1');
+                inboxHeader.classList.add('container-header');
+                inboxHeader.textContent = item;
                 // inbox.appendChild(header);
                 // createPage.addInboxItem(item);
-                createPage.addInboxItem(inbox, header);
+                createPage.addInboxItem(inbox, inboxHeader);
+                addEventListeners();
             }
+            else {
             inbox.innerHTML = "";
             inbox.textContent = "";
             const header = document.createElement('h1');
             header.classList.add('container-header');
             header.textContent = item;
             inbox.appendChild(header);
-            createPage.addInboxItem(inbox, header);
+            // createPage.addInboxItem(inbox, header);
+            }
     }
 
     const assignLinks = () => {
+        addEventListeners();
         const items = document.querySelectorAll(".sidebar-item");
         items.forEach((item) => {item.addEventListener("click", () => {
             switchTab(item.textContent);
-            addEventListeners();
         })});
     };
 
@@ -81,6 +86,8 @@ const switchTabs = (()=> {
             taskFormContainer.reset()
 
         })
+
+
     }
 
     return { switchTab, assignLinks }
