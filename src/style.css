@@ -180,6 +180,9 @@ input[type=text] {
 
 .taskcard-title {
     flex: 1 0 auto;
+    font-size: 1.2rem;
+    font-weight: bold;
+    padding-left: 1%;
 }
 
 .taskcard-description {
