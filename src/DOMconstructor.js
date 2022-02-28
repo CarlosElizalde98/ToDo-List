@@ -1,3 +1,4 @@
+import { switchTabs } from './switchTabs.js';
 import {toDo} from './toDoConstructor.js';
 const createPage = (()=> {
     const body = document.querySelector('#content');
@@ -47,13 +48,13 @@ const createPage = (()=> {
     const addSidebarItem = (item) => {
         const newItem = addTaskButton(item);
         const sidebarContent = document.querySelector('.sidebar-content');
+        newItem.addEventListener('click', () => {
+            switchTabs.switchTab(newItem.textContent);
+        });
         sidebarContent.appendChild(newItem);
     }
      
     const addInboxItem = (inbox, header) => {
-        // const newItem = addInboxButton(item);
-        // const inboxContent = document.querySelector(".inbox-container");
-        // inboxContent.appendChild(newItem);
 
         const taskButton = addInboxButton("Add Task");
         taskButton.classList.add('add-taskform');
@@ -68,6 +69,7 @@ const createPage = (()=> {
                 let task = toDo.getTaskData(localStorage.key(i));
                 let taskObject = toDo.createTaskCard(task);
                 addTaskCard(taskObject);
+                
             }
         }
     }
@@ -213,7 +215,7 @@ const createForms = (() => {
         priorityInputList.appendChild(highPriority);
         
         
-        //Manages Data Area
+        //Manages Date Area
         const taskDate = document.createElement('input');
         taskDate.setAttribute('type', "date");
         taskDate.setAttribute('name', "due-date");

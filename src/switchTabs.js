@@ -5,16 +5,14 @@ const switchTabs = (()=> {
 
     const switchTab = (item) => {
         const inbox = document.querySelector('.inbox-container');
-            // inbox.innerHTML = "";
             if (item == "Inbox") {
                 inbox.innerHTML = "";
                 const inboxHeader = document.createElement('h1');
                 inboxHeader.classList.add('container-header');
                 inboxHeader.textContent = item;
-                // inbox.appendChild(header);
-                // createPage.addInboxItem(item);
                 createPage.addInboxItem(inbox, inboxHeader);
-                addEventListeners();
+                addSidebarEventListeners();
+                addCardEventListeners();
             }
             else {
             inbox.innerHTML = "";
@@ -23,7 +21,6 @@ const switchTabs = (()=> {
             header.classList.add('container-header');
             header.textContent = item;
             inbox.appendChild(header);
-            // createPage.addInboxItem(inbox, header);
             }
     }
 
@@ -35,45 +32,52 @@ const switchTabs = (()=> {
         })});
     };
 
-    function addEventListeners() {
+    function addSidebarEventListeners() {
         const addTask = document.querySelector('.add-taskform');
-        const taskBtn = document.querySelector('.add-taskform');
         const taskForm = document.querySelector('.item-form-popup');
         const taskFormContainer = document.querySelector('.item-form-container');
 
+        // Listens for Add Task Button being pressed
         addTask.addEventListener('click', () => {
-            taskBtn.classList.toggle("item-form-popup");
+            addTask.classList.toggle("item-form-popup");
             taskForm.classList.toggle("item-form-popup-active");
         });
 
+        // Listens for Add Project Button being pressed.
         const addProject = document.querySelector('.add-sidebar-form');
         addProject.addEventListener('click', () => {
             document.querySelector('.form-popup').style.display = "block";
         });
 
+        // Listens for Cancel Button being pressed
         const cancelbtn = document.querySelector(".cancel-btn");
         cancelbtn.addEventListener('click', (event) => {
             event.preventDefault();
             document.querySelector('.form-popup').style.display = "none";
         });
 
-        const itemCancelBtn = document.querySelector(".item-cancel-btn");
-        itemCancelBtn.addEventListener('click',(event) => {
-            event.preventDefault();
-            taskBtn.classList.remove("item-form-popup");
-            taskForm.classList.remove("item-form-popup-active");
-
-        })
-
+        // Listens for Project Form Submit button being pressed
         const submitBtn = document.querySelector(".submit-btn");
         submitBtn.addEventListener('click', (event)=> {
             const form = document.querySelector('.form-text')
             event.preventDefault();
             createPage.addSidebarItem(form.value);
             document.querySelector('.form-popup').style.display = "none";
-            switchTabs.assignLinks();
         })
+    };
 
+    function addCardEventListeners() {
+
+        const taskFormContainer = document.querySelector('.item-form-container');
+        const itemCancelBtn = document.querySelector(".item-cancel-btn");
+        
+        itemCancelBtn.addEventListener('click',(event) => {
+            event.preventDefault();
+            addTask.classList.remove("item-form-popup");
+            taskForm.classList.remove("item-form-popup-active");
+
+        })
+        // Listens for Task Submit Button being pressed.
         const itemSubmitBtn = document.querySelector(".item-submit-btn");
         itemSubmitBtn.addEventListener('click', (event)=> {
             event.preventDefault();
@@ -82,17 +86,29 @@ const switchTabs = (()=> {
             const dueDate = document.getElementById("dueDate").value;
             const priority = document.getElementById("priorities").value;
             const newTask = toDo.createTask(title, description, dueDate, priority);
+
             toDo.setTaskData(title, newTask);
-            taskFormContainer.reset()
-            taskBtn.classList.remove("item-form-popup");
-            taskForm.classList.remove("item-form-popup-active");
             const taskCard = toDo.createTaskCard(newTask);
+            
+
+            taskFormContainer.reset()
+            addTask.classList.remove("item-form-popup");
+            taskForm.classList.remove("item-form-popup-active");
             createPage.addTaskCard(taskCard);
 
         })
 
+        // Listens for Task Card Remove Button to be pressed.
+        const removeCardBtn = document.querySelectorAll('.remove-card-btn');
+        removeCardBtn.forEach((btn) => {btn.addEventListener('click', (e) => {
+            btn.classList.add('active');
+            let parentDiv = btn.parentNode;
+            let taskTitle = parentDiv.getAttribute('id');
+            console.log(parentDiv);
+        })});
+    
 
-    }
+    };
 
     return { switchTab, assignLinks }
 })();

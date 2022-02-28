@@ -13,7 +13,7 @@ const toDo = (() => {
 
     }
 
-    function createTaskCard(taskObject) {
+    function createTaskCard( taskObject) {
         const taskCard = document.createElement('div');
         taskCard.classList.add('task-card-container');
 
@@ -23,6 +23,7 @@ const toDo = (() => {
 
         const taskCardTitle = document.createElement('h1');
         taskCardTitle.classList.add('taskcard-title');
+        taskCardTitle.setAttribute('id', taskObject.title);
         taskCardTitle.textContent = taskObject.title;
 
         const taskCardDesc = document.createElement('p');
@@ -37,11 +38,17 @@ const toDo = (() => {
         taskCardPriority.classList.add('taskcard-priority');
         taskCardPriority.textContent = taskObject.priority;
 
+        const removeTaskCardBtn = document.createElement('button');
+        removeTaskCardBtn.classList.add('remove-card-btn');
+        removeTaskCardBtn.setAttribute('type', "submit");
+        removeTaskCardBtn.textContent = "X";
+
         taskCard.appendChild(checkBox);
         taskCard.appendChild(taskCardTitle);
         taskCard.appendChild(taskCardDesc);
         taskCard.appendChild(taskCardDate);
         taskCard.appendChild(taskCardPriority);
+        taskCard.appendChild(removeTaskCardBtn);
 
         return taskCard;
     }

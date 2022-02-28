@@ -196,3 +196,9 @@ input[type=text] {
 .taskcard-priority {
     flex: 1 0 auto;
 }
+
+.remove-card-btn {
+    color: white;
+    border-style: none;
+    background-color: var(--navbar-color);
+}
