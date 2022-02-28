@@ -1,5 +1,6 @@
 import { switchTabs } from './switchTabs.js';
 import {toDo} from './toDoConstructor.js';
+
 const createPage = (()=> {
     const body = document.querySelector('#content');
 
@@ -22,15 +23,15 @@ const createPage = (()=> {
         const sidebarContent = document.createElement('div');
         sidebarContent.classList.add('sidebar-content');
 
-        const inbox = addTaskButton("Inbox");
-        const today = addTaskButton("Today");
-        const thisWeek = addTaskButton("This Week");
+        const inbox = addProjectButton("Inbox");
+        const today = addProjectButton("Today");
+        const thisWeek = addProjectButton("This Week");
 
         const sidebarHeading = document.createElement('h2');
         sidebarHeading.textContent = "Projects";
         sidebarHeading.classList.add("inbox-header");
 
-        const taskButton = addTaskButton("Add Project");
+        const taskButton = addProjectButton("Add Project");
         taskButton.classList.add('add-sidebar-form');
         const form = createForms.createProjectForm();
 
@@ -46,7 +47,7 @@ const createPage = (()=> {
     }
 
     const addSidebarItem = (item) => {
-        const newItem = addTaskButton(item);
+        const newItem = addProjectButton(item);
         const sidebarContent = document.querySelector('.sidebar-content');
         newItem.addEventListener('click', () => {
             switchTabs.switchTab(newItem.textContent);
@@ -107,7 +108,7 @@ const createPage = (()=> {
         return navbarText;
     };
 
-    function addTaskButton(heading) {
+    function addProjectButton(heading) {
         const option = document.createElement('div');
         option.classList.add('sidebar-item');
         option.textContent = heading;
