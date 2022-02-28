@@ -68,8 +68,7 @@ const createPage = (()=> {
             for (let i = 0; i < localStorage.length; i++){
                 let task = toDo.getTaskData(localStorage.key(i));
                 let taskObject = toDo.createTaskCard(task, i);
-                addTaskCard(taskObject);
-                
+                addTaskCard(taskObject);  
             }
         }
     }
@@ -78,6 +77,7 @@ const createPage = (()=> {
         const inbox = document.querySelector('.inbox-container');
         const taskFormButton = document.querySelector('.add-taskform');
         inbox.insertBefore(taskCard, taskFormButton);
+        switchTabs.removeCardListener();
     }
 
     const createInbox = () => {
