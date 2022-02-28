@@ -91,13 +91,14 @@ const createPage = (()=> {
         const taskButton = addInboxButton("Add Task");
         taskButton.classList.add('add-taskform');
         const form = createForms.createTaskForm();
-        
-        
+      
         inbox.appendChild(header);
         inbox.appendChild(taskButton);
         inbox.appendChild(form);
 
         body.appendChild(inbox);
+
+        checkLocalStorage();
     }
 
     function addNavBarText() {
@@ -129,7 +130,9 @@ const createPage = (()=> {
                 let task = toDo.getTaskData(localStorage.key(i));
                 let taskObject = toDo.createTaskCard(task, i);
                 addTaskCard(taskObject);
+                
             }
+            switchTabs.addCardEventListeners();
         }
     }
 

@@ -13,7 +13,7 @@ const toDo = (() => {
 
     }
 
-    function createTaskCard( taskObject) {
+    function createTaskCard(taskObject, indexPlace) {
         const taskCard = document.createElement('div');
         taskCard.classList.add('task-card-container');
 
@@ -41,6 +41,7 @@ const toDo = (() => {
         const removeTaskCardBtn = document.createElement('button');
         removeTaskCardBtn.classList.add('remove-card-btn');
         removeTaskCardBtn.setAttribute('type', "submit");
+        removeTaskCardBtn.setAttribute('value', indexPlace);
         removeTaskCardBtn.textContent = "X";
 
         taskCard.appendChild(checkBox);
@@ -63,6 +64,10 @@ const toDo = (() => {
         return myTaskCard;
     }
 
-    return {createTask, createTaskCard, setTaskData, getTaskData};
+    function removeTaskData(title) {
+        localStorage.removeItem(title);
+    }
+
+    return {createTask, createTaskCard, setTaskData, getTaskData, removeTaskData};
 })();
 export { toDo };

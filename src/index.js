@@ -11,7 +11,6 @@ const constructPage = (() =>{
     // switchTabs.switchTab('Inbox');
     switchTabs.assignLinks();
     
-    createPage.checkLocalStorage();
 })();
 
 

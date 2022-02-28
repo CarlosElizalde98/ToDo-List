@@ -36,6 +36,7 @@ const switchTabs = (()=> {
         items.forEach((item) => {item.addEventListener("click", () => {
             switchTab(item.textContent);
         })});
+
         addSidebarEventListeners();
         addCardEventListeners();
     };
@@ -87,10 +88,14 @@ const switchTabs = (()=> {
 
         })
         // Listens for Task Submit Button being pressed.
-        let indexPlace = 0;
+        
         const itemSubmitBtn = document.querySelector(".item-submit-btn");
         itemSubmitBtn.addEventListener('click', (event)=> {
             event.preventDefault();
+            let indexPlace = 0;
+            if (localStorage.length > 0) {
+                indexPlace = localStorage.length - 1;
+            }
             const title = document.getElementById("title").value;
             const description = document.getElementById("description").value;
             const dueDate = document.getElementById("dueDate").value;
@@ -105,7 +110,6 @@ const switchTabs = (()=> {
             addTask.classList.remove("item-form-popup");
             taskForm.classList.remove("item-form-popup-active");
             createPage.addTaskCard(taskCard);
-            indexPlace++;
         })
 
         // Listens for Task Card Remove Button to be pressed.
@@ -120,7 +124,7 @@ const switchTabs = (()=> {
 
     };
 
-    return { switchTab, assignLinks }
+    return { switchTab, assignLinks, addCardEventListeners };
 })();
 
 export {switchTabs};
