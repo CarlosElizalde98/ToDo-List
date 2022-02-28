@@ -13,7 +13,7 @@ const toDo = (() => {
 
     }
 
-    function createTaskCard(taskObject, indexPlace) {
+    function createTaskCard(taskObject) {
         const taskCard = document.createElement('div');
         taskCard.classList.add('task-card-container');
 
@@ -41,7 +41,7 @@ const toDo = (() => {
         const removeTaskCardBtn = document.createElement('button');
         removeTaskCardBtn.classList.add('remove-card-btn');
         removeTaskCardBtn.setAttribute('type', "submit");
-        removeTaskCardBtn.setAttribute('value', indexPlace);
+        removeTaskCardBtn.setAttribute('value', taskObject.title);
         removeTaskCardBtn.textContent = "X";
 
         taskCard.appendChild(checkBox);

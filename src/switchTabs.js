@@ -113,7 +113,7 @@ const switchTabs = (()=> {
             
 
             toDo.setTaskData(title, newTask);
-            const taskCard = toDo.createTaskCard(newTask, indexPlace);
+            const taskCard = toDo.createTaskCard(newTask);
             console.log(localStorage.length);
             taskFormContainer.reset()
             addTask.classList.remove("item-form-popup");
@@ -136,7 +136,7 @@ const switchTabs = (()=> {
             removeCardBtn.forEach((btn) => {btn.addEventListener('click', (e) => {
             btn.classList.add('active');
             let btnIndexPlace = btn.getAttribute('value');
-            toDo.removeTaskData(localStorage.key(btnIndexPlace));
+            toDo.removeTaskData(btnIndexPlace);
             switchTabs.switchTab('Inbox');
         })});
     };
