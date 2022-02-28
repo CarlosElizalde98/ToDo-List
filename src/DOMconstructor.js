@@ -67,7 +67,7 @@ const createPage = (()=> {
         if (localStorage.length > 0) {
             for (let i = 0; i < localStorage.length; i++){
                 let task = toDo.getTaskData(localStorage.key(i));
-                let taskObject = toDo.createTaskCard(task);
+                let taskObject = toDo.createTaskCard(task, i);
                 addTaskCard(taskObject);
                 
             }
@@ -127,7 +127,7 @@ const createPage = (()=> {
         if (localStorage.length > 0) {
             for (let i = 0; i < localStorage.length; i++){
                 let task = toDo.getTaskData(localStorage.key(i));
-                let taskObject = toDo.createTaskCard(task);
+                let taskObject = toDo.createTaskCard(task, i);
                 addTaskCard(taskObject);
             }
         }
