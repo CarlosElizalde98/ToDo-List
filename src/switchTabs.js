@@ -6,8 +6,7 @@ const switchTabs = (()=> {
 
     const switchTab = (item) => {
         const inbox = document.querySelector('.inbox-container');
-        // addSidebarEventListeners();
-        // addCardEventListeners();
+        
             if (item == "Inbox") {
                 inbox.innerHTML = "";
                 const inboxHeader = document.createElement('h1');
@@ -31,9 +30,6 @@ const switchTabs = (()=> {
 
     const assignLinks = () => {
 
-        // addSidebarEventListeners();
-        // addCardEventListeners();
-        
         const items = document.querySelectorAll(".sidebar-item");
         items.forEach((item) => {item.addEventListener("click", () => {
             switchTab(item.textContent);
@@ -75,7 +71,6 @@ const switchTabs = (()=> {
     function addTaskEventListener() {
         const itemCancelBtn = document.querySelector(".item-cancel-btn");
         const taskForm = document.querySelector('.item-form-popup');
-    
         const addTask = document.querySelector('.add-taskform');
 
         addTask.addEventListener('click', () => {
@@ -101,43 +96,30 @@ const switchTabs = (()=> {
         const itemSubmitBtn = document.querySelector(".item-submit-btn");
         itemSubmitBtn.addEventListener('click', (event)=> {
             event.preventDefault();
-            let indexPlace = 0;
-            if (localStorage.length > 0) {
-                indexPlace = localStorage.length;
-            }
+
             const title = document.getElementById("title").value;
             const description = document.getElementById("description").value;
             const dueDate = document.getElementById("dueDate").value;
             const priority = document.getElementById("priorities").value;
             const newTask = toDo.createTask(title, description, dueDate, priority);
             
-
             toDo.setTaskData(title, newTask);
             const taskCard = toDo.createTaskCard(newTask);
-            console.log(localStorage.length);
             taskFormContainer.reset()
             addTask.classList.remove("item-form-popup");
             taskForm.classList.remove("item-form-popup-active");
             createPage.addTaskCard(taskCard);
         })
-
-        // // Listens for Task Card Remove Button to be pressed.
-        // const removeCardBtn = document.querySelectorAll('.remove-card-btn');
-        // removeCardBtn.forEach((btn) => {btn.addEventListener('click', (e) => {
-        //     btn.classList.add('active');
-        //     let btnIndexPlace = btn.getAttribute('value');
-        //     toDo.removeTaskData(localStorage.key(btnIndexPlace));
-        //     switchTabs.switchTab('Inbox');
-        // })});
     };
         
     function removeCardListener () {
             const removeCardBtn = document.querySelectorAll('.remove-card-btn');
             removeCardBtn.forEach((btn) => {btn.addEventListener('click', (e) => {
-            btn.classList.add('active');
-            let btnIndexPlace = btn.getAttribute('value');
-            toDo.removeTaskData(btnIndexPlace);
-            switchTabs.switchTab('Inbox');
+                e.preventDefault();
+                btn.classList.add('active');
+                let btnIndexPlace = btn.getAttribute('value');
+                toDo.removeTaskData(btnIndexPlace);
+                switchTabs.switchTab('Inbox');
         })});
     };
     

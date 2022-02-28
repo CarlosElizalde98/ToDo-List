@@ -48,9 +48,15 @@ const createPage = (()=> {
 
     const addSidebarItem = (item) => {
         const newItem = addProjectButton(item);
+        const removeBtn = document.createElement('button');
+        removeBtn.classList.add('remove-project-button');
+        removeBtn.textContent = "X";
+        const newItemName = newItem.getAttribute('name');
+        newItem.appendChild(removeBtn);
+
         const sidebarContent = document.querySelector('.sidebar-content');
         newItem.addEventListener('click', () => {
-            switchTabs.switchTab(newItem.textContent);
+            switchTabs.switchTab(newItemName);
         });
         sidebarContent.appendChild(newItem);
     }
@@ -111,7 +117,11 @@ const createPage = (()=> {
     function addProjectButton(heading) {
         const option = document.createElement('div');
         option.classList.add('sidebar-item');
-        option.textContent = heading;
+        option.setAttribute('name', heading);
+        const optionText = document.createElement('p');
+        optionText.classList.add('sidebar-item-heading');
+        optionText.textContent = heading;
+        option.appendChild(optionText);
 
         return option;
 

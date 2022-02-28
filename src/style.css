@@ -197,8 +197,16 @@ input[type=text] {
     flex: 1 0 auto;
 }
 
-.remove-card-btn {
+.remove-card-btn, .remove-project-button {
     color: white;
     border-style: none;
     background-color: var(--navbar-color);
+}
+
+.remove-project-button {
+    
+}
+
+.sidebar-item-heading {
+    flex-grow: 2;
 }

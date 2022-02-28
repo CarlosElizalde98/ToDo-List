@@ -1,4 +1,3 @@
-import {createPage } from './DOMconstructor.js';
 
 const toDo = (() => {
     
