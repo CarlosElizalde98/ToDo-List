@@ -100,7 +100,7 @@ body {
     border: 2px solid white;
 }
 
-.form-popup, .add-item-form {
+.form-popup, .add-item-form, .hide-item {
     display: none;
     padding: 12px;
   }

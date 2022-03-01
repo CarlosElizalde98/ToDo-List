@@ -10,9 +10,9 @@ const constructPage = (() =>{
 
     // switchTabs.switchTab('Inbox');
     switchTabs.assignLinks();
-    if (localStorage.length > 0) {
-        switchTabs.addTaskEventListener();
-    }
+    
+    switchTabs.addTaskEventListener();
+    
 })();
 
 

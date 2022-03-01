@@ -14,9 +14,9 @@ const switchTabs = (()=> {
                 inboxHeader.textContent = item;
                 createPage.addInboxItem(inbox, inboxHeader);
                 addSidebarEventListeners();
-              
                 addTaskEventListener();
             }
+
             else {
             inbox.innerHTML = "";
             inbox.textContent = "";
@@ -24,7 +24,6 @@ const switchTabs = (()=> {
             header.classList.add('container-header');
             header.textContent = item;
             inbox.appendChild(header);
-    
             }
     }
 
@@ -36,8 +35,7 @@ const switchTabs = (()=> {
         })});
 
         addSidebarEventListeners();
-     
-        addTaskEventListener();
+
     };
 
     function addSidebarEventListeners() {
@@ -82,13 +80,11 @@ const switchTabs = (()=> {
             taskForm.classList.toggle("item-form-popup-active");
             const itemCancelBtn = document.querySelector(".item-cancel-btn");
 
-            itemCancelBtn.addEventListener('click',(event) => {
+            itemCancelBtn.addEventListener('click', function(event) {
                 event.preventDefault();
-                const form = document.querySelector(".item-form-popup");
                 inbox.removeChild(inbox.lastElementChild);
                 addTask.classList.toggle("item-form-popup");
             });
-            
             addCardEventListeners();
         });
 
@@ -120,8 +116,6 @@ const switchTabs = (()=> {
             addTask.classList.remove("item-form-popup");
             taskForm.classList.remove("item-form-popup-active");
             createPage.addTaskCard(taskCard);
-
-
         })
     };
         
