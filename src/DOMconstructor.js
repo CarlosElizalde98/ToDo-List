@@ -65,11 +65,11 @@ const createPage = (()=> {
 
         const taskButton = addInboxButton("Add Task");
         taskButton.classList.add('add-taskform');
-        const form = createForms.createTaskForm();
+        // const form = createForms.createTaskForm();
 
         inbox.appendChild(header);
         inbox.appendChild(taskButton);
-        inbox.appendChild(form);
+        // inbox.appendChild(form);
 
         if (localStorage.length > 0) {
             for (let i = 0; i < localStorage.length; i++){
@@ -97,11 +97,11 @@ const createPage = (()=> {
 
         const taskButton = addInboxButton("Add Task");
         taskButton.classList.add('add-taskform');
-        const form = createForms.createTaskForm();
+        // const form = createForms.createTaskForm();
       
         inbox.appendChild(header);
         inbox.appendChild(taskButton);
-        inbox.appendChild(form);
+        // inbox.appendChild(form);
 
         body.appendChild(inbox);
 
@@ -143,7 +143,7 @@ const createPage = (()=> {
                 addTaskCard(taskObject);
                 
             }
-            switchTabs.addCardEventListeners();
+         switchTabs.addTaskEventListener();
         }
     }
 
@@ -260,4 +260,4 @@ const createForms = (() => {
     return {createProjectForm, createTaskForm};
 })();
 
-export { createPage }
+export { createPage, createForms }

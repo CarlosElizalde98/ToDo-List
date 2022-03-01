@@ -6,10 +6,19 @@ const toDo = (() => {
         return {title, description, dueDate, priority};
     };
 
+    const project = (title) => {
+        return {title};
+    };
+
     function createTask (title, description, dueDate, priority) {
         const item = toDoItem(title, description, dueDate, priority);
         return item;
 
+    }
+
+    function createProject (title) {
+        const newProject = project(title);
+        return newProject;
     }
 
     function createTaskCard(taskObject) {
@@ -27,6 +36,7 @@ const toDo = (() => {
 
         const taskCardDesc = document.createElement('p');
         taskCardDesc.classList.add('taskcard-description');
+        // taskCardDesc.setAttribute('id', taskObject.description);
         taskCardDesc.textContent = taskObject.description;
 
         const taskCardDate = document.createElement('p');
@@ -59,7 +69,6 @@ const toDo = (() => {
 
     function getTaskData(title) {
         const myTaskCard = JSON.parse(localStorage.getItem(title));
-        console.log(myTaskCard);
         return myTaskCard;
     }
 
@@ -67,6 +76,6 @@ const toDo = (() => {
         localStorage.removeItem(title);
     }
 
-    return {createTask, createTaskCard, setTaskData, getTaskData, removeTaskData};
+    return {createTask, createProject, createTaskCard, setTaskData, getTaskData, removeTaskData};
 })();
 export { toDo };

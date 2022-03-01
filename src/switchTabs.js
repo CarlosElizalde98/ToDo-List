@@ -1,5 +1,5 @@
 import { add } from 'date-fns';
-import {createPage } from './DOMconstructor.js';
+import {createPage, createForms } from './DOMconstructor.js';
 import {toDo} from './toDoConstructor.js';
 
 const switchTabs = (()=> {
@@ -14,7 +14,7 @@ const switchTabs = (()=> {
                 inboxHeader.textContent = item;
                 createPage.addInboxItem(inbox, inboxHeader);
                 addSidebarEventListeners();
-                addCardEventListeners();
+              
                 addTaskEventListener();
             }
             else {
@@ -36,7 +36,7 @@ const switchTabs = (()=> {
         })});
 
         addSidebarEventListeners();
-        addCardEventListeners();
+     
         addTaskEventListener();
     };
 
@@ -69,39 +69,50 @@ const switchTabs = (()=> {
     };
 
     function addTaskEventListener() {
-        const itemCancelBtn = document.querySelector(".item-cancel-btn");
-        const taskForm = document.querySelector('.item-form-popup');
+       
+        const inbox = document.querySelector('.inbox-container');
         const addTask = document.querySelector('.add-taskform');
 
         addTask.addEventListener('click', () => {
+
+            const form = createForms.createTaskForm();
+            inbox.appendChild(form);
+            const taskForm = document.querySelector('.item-form-popup');
             addTask.classList.toggle("item-form-popup");
             taskForm.classList.toggle("item-form-popup-active");
+            const itemCancelBtn = document.querySelector(".item-cancel-btn");
+
+            itemCancelBtn.addEventListener('click',(event) => {
+                event.preventDefault();
+                const form = document.querySelector(".item-form-popup");
+                inbox.removeChild(inbox.lastElementChild);
+                addTask.classList.toggle("item-form-popup");
+            });
+            
+            addCardEventListeners();
         });
 
-        itemCancelBtn.addEventListener('click',(event) => {
-            event.preventDefault();
-            addTask.classList.remove("item-form-popup");
-            taskForm.classList.remove("item-form-popup-active");
-
-        })
     }
     function addCardEventListeners() {
         const addTask = document.querySelector('.add-taskform');
         const taskFormContainer = document.querySelector('.item-form-container');
         const taskForm = document.querySelector('.item-form-popup');
-
-    
+        const inbox = document.querySelector('.inbox-container');
+      
         // Listens for Task Submit Button being pressed.
         
         const itemSubmitBtn = document.querySelector(".item-submit-btn");
         itemSubmitBtn.addEventListener('click', (event)=> {
             event.preventDefault();
-
             const title = document.getElementById("title").value;
             const description = document.getElementById("description").value;
             const dueDate = document.getElementById("dueDate").value;
             const priority = document.getElementById("priorities").value;
+            
             const newTask = toDo.createTask(title, description, dueDate, priority);
+           
+            inbox.removeChild(inbox.lastElementChild);
+            addTask.classList.toggle("item-form-popup");
             
             toDo.setTaskData(title, newTask);
             const taskCard = toDo.createTaskCard(newTask);
@@ -109,6 +120,8 @@ const switchTabs = (()=> {
             addTask.classList.remove("item-form-popup");
             taskForm.classList.remove("item-form-popup-active");
             createPage.addTaskCard(taskCard);
+
+
         })
     };
         
@@ -126,7 +139,7 @@ const switchTabs = (()=> {
         
 
 
-    return { switchTab, assignLinks, addCardEventListeners, removeCardListener };
+    return { switchTab, assignLinks, addTaskEventListener, removeCardListener };
 })();
 
 export {switchTabs};
