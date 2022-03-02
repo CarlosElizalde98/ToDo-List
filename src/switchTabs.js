@@ -42,28 +42,43 @@ const switchTabs = (()=> {
         const addTask = document.querySelector('.add-taskform');
         const taskForm = document.querySelector('.item-form-popup');
         const taskFormContainer = document.querySelector('.item-form-container');
+        const sidebar = document.querySelector(".sidebar-content");
 
         // Listens for Add Project Button being pressed.
         const addProject = document.querySelector('.add-sidebar-form');
+        const projectFormContainer = document.querySelector('.form-container');
         addProject.addEventListener('click', () => {
-            document.querySelector('.form-popup').style.display = "block";
+            // document.querySelector('.form-popup').style.display = "block";
+            const form = createForms.createProjectForm();
+            sidebar.appendChild(form);
+            const projectForm = document.querySelector('.form-popup');
+            projectForm.classList.toggle('form-popup-active');
+            addProject.classList.toggle('form-popup');
+            const projCancelBtn = document.querySelector('.cancel-btn');
+
+            projCancelBtn.addEventListener('click', function(event) {
+                event.preventDefault();
+                projectForm.remove();
+                addProject.classList.toggle('form-popup');
+            });
+
         });
 
-        // Listens for Cancel Button being pressed
-        const cancelbtn = document.querySelector(".cancel-btn");
-        cancelbtn.addEventListener('click', (event) => {
-            event.preventDefault();
-            document.querySelector('.form-popup').style.display = "none";
-        });
+        // // Listens for Cancel Button being pressed
+        // const cancelbtn = document.querySelector(".cancel-btn");
+        // cancelbtn.addEventListener('click', (event) => {
+        //     event.preventDefault();
+        //     document.querySelector('.form-popup').style.display = "none";
+        // });
 
-        // Listens for Project Form Submit button being pressed
-        const submitBtn = document.querySelector(".submit-btn");
-        submitBtn.addEventListener('click', (event)=> {
-            const form = document.querySelector('.form-text')
-            event.preventDefault();
-            createPage.addSidebarItem(form.value);
-            document.querySelector('.form-popup').style.display = "none";
-        })
+        // // Listens for Project Form Submit button being pressed
+        // const submitBtn = document.querySelector(".submit-btn");
+        // submitBtn.addEventListener('click', (event)=> {
+        //     const form = document.querySelector('.form-text')
+        //     event.preventDefault();
+        //     createPage.addSidebarItem(form.value);
+        //     document.querySelector('.form-popup').style.display = "none";
+        // })
     };
 
     function addTaskEventListener() {
@@ -89,6 +104,7 @@ const switchTabs = (()=> {
         });
 
     }
+
     function addCardEventListeners() {
         const addTask = document.querySelector('.add-taskform');
         const taskFormContainer = document.querySelector('.item-form-container');

@@ -105,6 +105,11 @@ body {
     padding: 12px;
   }
 
+.form-popup-active {
+    display: block;
+    padding: 12px;
+}
+
 .form-container {
     max-width: 300px;
     

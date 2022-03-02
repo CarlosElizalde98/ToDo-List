@@ -33,14 +33,14 @@ const createPage = (()=> {
 
         const taskButton = addProjectButton("Add Project");
         taskButton.classList.add('add-sidebar-form');
-        const form = createForms.createProjectForm();
+    
 
         sidebarContent.appendChild(inbox);
         sidebarContent.appendChild(today);
         sidebarContent.appendChild(thisWeek);
         sidebarContent.appendChild(sidebarHeading);
         sidebarContent.appendChild(taskButton);
-        sidebarContent.appendChild(form);
+      
 
         sideBar.appendChild(sidebarContent);
         body.appendChild(sideBar);
@@ -65,11 +65,9 @@ const createPage = (()=> {
 
         const taskButton = addInboxButton("Add Task");
         taskButton.classList.add('add-taskform');
-        // const form = createForms.createTaskForm();
 
         inbox.appendChild(header);
         inbox.appendChild(taskButton);
-        // inbox.appendChild(form);
 
         if (localStorage.length > 0) {
             for (let i = 0; i < localStorage.length; i++){
@@ -97,11 +95,9 @@ const createPage = (()=> {
 
         const taskButton = addInboxButton("Add Task");
         taskButton.classList.add('add-taskform');
-        // const form = createForms.createTaskForm();
       
         inbox.appendChild(header);
         inbox.appendChild(taskButton);
-        // inbox.appendChild(form);
 
         body.appendChild(inbox);
 
@@ -141,7 +137,6 @@ const createPage = (()=> {
                 let task = toDo.getTaskData(localStorage.key(i));
                 let taskObject = toDo.createTaskCard(task, i);
                 addTaskCard(taskObject);  
-
             }
         }
     }
