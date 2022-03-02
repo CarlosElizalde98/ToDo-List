@@ -48,13 +48,15 @@ const switchTabs = (()=> {
         const addProject = document.querySelector('.add-sidebar-form');
         const projectFormContainer = document.querySelector('.form-container');
         addProject.addEventListener('click', () => {
-            // document.querySelector('.form-popup').style.display = "block";
+    
             const form = createForms.createProjectForm();
             sidebar.appendChild(form);
             const projectForm = document.querySelector('.form-popup');
             projectForm.classList.toggle('form-popup-active');
             addProject.classList.toggle('form-popup');
+
             const projCancelBtn = document.querySelector('.cancel-btn');
+            const projSubmitBtn = document.querySelector('.submit-btn');
 
             projCancelBtn.addEventListener('click', function(event) {
                 event.preventDefault();
@@ -62,23 +64,16 @@ const switchTabs = (()=> {
                 addProject.classList.toggle('form-popup');
             });
 
+            projSubmitBtn.addEventListener('click', function(event) {
+                event.preventDefault();
+                const title = document.getElementById('project-title').value;
+                const id = "Project " + title;
+                const newProject = toDo.createProject(title, id);
+                toDo.setTaskData(id, newProject);
+                console.log(toDo.getTaskData(id));
+
+            });
         });
-
-        // // Listens for Cancel Button being pressed
-        // const cancelbtn = document.querySelector(".cancel-btn");
-        // cancelbtn.addEventListener('click', (event) => {
-        //     event.preventDefault();
-        //     document.querySelector('.form-popup').style.display = "none";
-        // });
-
-        // // Listens for Project Form Submit button being pressed
-        // const submitBtn = document.querySelector(".submit-btn");
-        // submitBtn.addEventListener('click', (event)=> {
-        //     const form = document.querySelector('.form-text')
-        //     event.preventDefault();
-        //     createPage.addSidebarItem(form.value);
-        //     document.querySelector('.form-popup').style.display = "none";
-        // })
     };
 
     function addTaskEventListener() {
@@ -145,11 +140,20 @@ const switchTabs = (()=> {
                 switchTabs.switchTab('Inbox');
         })});
     };
+
+    function removeProjectListener () {
+        const removeBtn = document.querySelectorAll(".remove-project-button");
+        removeBtn.forEach((btn) => {btn.addEventListener('click', (event) => {
+            event.preventDefault();
+            const indexPlace = btn.getAttribute('id');
+            toDo.removeTaskData(indexPlace);
+        })});
+    }
     
         
 
 
-    return { switchTab, assignLinks, addTaskEventListener, removeCardListener };
+    return { switchTab, assignLinks, addTaskEventListener, removeCardListener, removeProjectListener };
 })();
 
 export {switchTabs};

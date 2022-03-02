@@ -6,8 +6,8 @@ const toDo = (() => {
         return {title, description, dueDate, priority};
     };
 
-    const project = (title) => {
-        return {title};
+    const project = (title, id) => {
+        return {title, id};
     };
 
     function createTask (title, description, dueDate, priority) {
@@ -16,8 +16,8 @@ const toDo = (() => {
 
     }
 
-    function createProject (title) {
-        const newProject = project(title);
+    function createProject (title, id) {
+        const newProject = project(title, id);
         return newProject;
     }
 

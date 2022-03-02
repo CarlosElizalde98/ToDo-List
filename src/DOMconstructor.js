@@ -47,18 +47,21 @@ const createPage = (()=> {
     }
 
     const addSidebarItem = (item) => {
+        
         const newItem = addProjectButton(item);
         const removeBtn = document.createElement('button');
         removeBtn.classList.add('remove-project-button');
+        removeBtn.setAttribute('id', item);
         removeBtn.textContent = "X";
         const newItemName = newItem.getAttribute('name');
         newItem.appendChild(removeBtn);
-
         const sidebarContent = document.querySelector('.sidebar-content');
+        const addTask = document.querySelector('.add-sidebar-form');
         newItem.addEventListener('click', () => {
             switchTabs.switchTab(newItemName);
         });
-        sidebarContent.appendChild(newItem);
+       
+        sidebarContent.insertBefore(newItem, addTask);
     }
      
     const addInboxItem = (inbox, header) => {
@@ -69,13 +72,7 @@ const createPage = (()=> {
         inbox.appendChild(header);
         inbox.appendChild(taskButton);
 
-        if (localStorage.length > 0) {
-            for (let i = 0; i < localStorage.length; i++){
-                let task = toDo.getTaskData(localStorage.key(i));
-                let taskObject = toDo.createTaskCard(task, i);
-                addTaskCard(taskObject);  
-            }
-        }
+        checkLocalStorage();
     }
 
     const addTaskCard = (taskCard) => {
@@ -134,10 +131,18 @@ const createPage = (()=> {
     const checkLocalStorage = () => {
         if (localStorage.length > 0) {
             for (let i = 0; i < localStorage.length; i++){
-                let task = toDo.getTaskData(localStorage.key(i));
-                let taskObject = toDo.createTaskCard(task, i);
-                addTaskCard(taskObject);  
+                if (!(localStorage.key(i).includes("Project"))) {
+                    console.log(localStorage.key(i));
+                    let task = toDo.getTaskData(localStorage.key(i));
+                    let taskObject = toDo.createTaskCard(task, i);
+                    addTaskCard(taskObject); 
+                } 
+                else {
+                    let project = toDo.getTaskData(localStorage.key(i));
+                    addSidebarItem(localStorage.key(i));
+                }
             }
+            switchTabs.removeProjectListener();
         }
     }
 
@@ -161,6 +166,7 @@ const createForms = (() => {
         const input = document.createElement('input');
         input.setAttribute('type', "text");
         input.setAttribute('name', 'item-name');
+        input.setAttribute('id', "project-title");
         input.classList.add('form-text')
         const submitBtn = document.createElement('input');
         submitBtn.classList.add('submit-btn');
