@@ -13,8 +13,8 @@ const switchTabs = (()=> {
                 inboxHeader.classList.add('container-header');
                 inboxHeader.textContent = item;
                 createPage.addInboxItem(inbox, inboxHeader);
-                addSidebarEventListeners();
-                addTaskEventListener();
+                // addSidebarEventListeners();
+                // addTaskEventListener();
             }
 
             else {
@@ -47,7 +47,7 @@ const switchTabs = (()=> {
         // Listens for Add Project Button being pressed.
         const addProject = document.querySelector('.add-sidebar-form');
         const projectFormContainer = document.querySelector('.form-container');
-        addProject.addEventListener('click', () => {
+        addProject.addEventListener('click', function() {
     
             const form = createForms.createProjectForm();
             sidebar.appendChild(form);

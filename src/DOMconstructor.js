@@ -41,9 +41,10 @@ const createPage = (()=> {
         sidebarContent.appendChild(sidebarHeading);
         sidebarContent.appendChild(taskButton);
       
-
         sideBar.appendChild(sidebarContent);
         body.appendChild(sideBar);
+
+        checkProjectLocalStorage();
     }
 
     const addSidebarItem = (item) => {
@@ -72,7 +73,7 @@ const createPage = (()=> {
         inbox.appendChild(header);
         inbox.appendChild(taskButton);
 
-        checkLocalStorage();
+        // checkLocalStorage();
     }
 
     const addTaskCard = (taskCard) => {
@@ -98,7 +99,7 @@ const createPage = (()=> {
 
         body.appendChild(inbox);
 
-        checkLocalStorage();
+        checkCardLocalStorage();
     }
 
     function addNavBarText() {
@@ -128,7 +129,7 @@ const createPage = (()=> {
         return option;
     }
 
-    const checkLocalStorage = () => {
+    const checkCardLocalStorage = () => {
         if (localStorage.length > 0) {
             for (let i = 0; i < localStorage.length; i++){
                 if (!(localStorage.key(i).includes("Project"))) {
@@ -137,18 +138,23 @@ const createPage = (()=> {
                     let taskObject = toDo.createTaskCard(task, i);
                     addTaskCard(taskObject); 
                 } 
-                else {
-                    let project = toDo.getTaskData(localStorage.key(i));
-                    addSidebarItem(localStorage.key(i));
-                }
-            }
-            switchTabs.removeProjectListener();
+            } 
         }
     }
 
+    const checkProjectLocalStorage = () => {
+        if (localStorage.length > 0) {
+            for (let i = 0; i < localStorage.length; i++) {
+                if(localStorage.key(i).includes("Project")){
+                    addSidebarItem(localStorage.key(i));
+                }
+            }
+        }
+    };
+
 
     return { createNavBar, createSideBar, createInbox, 
-        addSidebarItem, addInboxItem, addTaskCard, checkLocalStorage };
+        addSidebarItem, addInboxItem, addTaskCard, checkCardLocalStorage };
 })();
 
 const createForms = (() => {
