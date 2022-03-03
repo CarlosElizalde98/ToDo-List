@@ -73,7 +73,7 @@ const createPage = (()=> {
         inbox.appendChild(header);
         inbox.appendChild(taskButton);
 
-        // checkLocalStorage();
+        checkCardLocalStorage();
     }
 
     const addTaskCard = (taskCard) => {

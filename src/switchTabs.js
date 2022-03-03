@@ -13,8 +13,7 @@ const switchTabs = (()=> {
                 inboxHeader.classList.add('container-header');
                 inboxHeader.textContent = item;
                 createPage.addInboxItem(inbox, inboxHeader);
-                // addSidebarEventListeners();
-                // addTaskEventListener();
+            
             }
 
             else {
@@ -30,10 +29,9 @@ const switchTabs = (()=> {
 
     const assignLinks = () => {
 
-        const items = document.querySelectorAll(".sidebar-item-heading");
+        const items = document.querySelectorAll(".sidebar-item");
         items.forEach((item) => {item.addEventListener("click", () => {
-            console.log(item);
-            switchTab(item.textContent);
+            switchTab(item.childNodes[0].textContent);
         })});
 
         addSidebarEventListeners();
@@ -72,7 +70,6 @@ const switchTabs = (()=> {
                 const id = "Project " + title;
                 const newProject = toDo.createProject(title, id);
                 toDo.setTaskData(id, newProject);
-                console.log(toDo.getTaskData(id));
 
             });
         });
@@ -143,7 +140,7 @@ const switchTabs = (()=> {
         })});
     };
 
-    function removeProjectListener () {
+    function addRemoveProjectListener () {
         const removeBtn = document.querySelectorAll(".remove-project-button");
         removeBtn.forEach((btn) => {btn.addEventListener('click', (event) => {
             event.preventDefault();
@@ -155,7 +152,7 @@ const switchTabs = (()=> {
         
 
 
-    return { switchTab, assignLinks, addTaskEventListener, removeCardListener, removeProjectListener };
+    return { switchTab, assignLinks, addTaskEventListener, removeCardListener, addRemoveProjectListener };
 })();
 
 export {switchTabs};
