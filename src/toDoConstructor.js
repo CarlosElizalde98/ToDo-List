@@ -1,3 +1,4 @@
+import {isToday, isThisWeek, parse} from 'date-fns';
 
 const toDo = (() => {
     
@@ -59,7 +60,7 @@ const toDo = (() => {
         taskCard.appendChild(taskCardDate);
         taskCard.appendChild(taskCardPriority);
         taskCard.appendChild(removeTaskCardBtn);
-
+        console.log(taskCard);
         return taskCard;
     }
 
@@ -76,6 +77,27 @@ const toDo = (() => {
         localStorage.removeItem(title);
     }
 
-    return {createTask, createProject, createTaskCard, setTaskData, getTaskData, removeTaskData};
+    function checkTaskCardDate (title, taskObject) {
+        if (title === "Today"){
+            let date = parse(taskObject.dueDate, 'yyyy-MM-dd', new Date());
+            if(isToday(date)) {
+                let todaysCard = taskObject
+                return todaysCard;
+            }
+        }
+        else if (title === "This Week"){
+            let date = parse(taskObject.dueDate, 'yyyy-MM-dd', new Date());
+            if (isThisWeek(date)){
+                let thisWeek = taskObject;
+                console.log(thisWeek);
+                return thisWeek;
+            }
+        }
+        else {
+            return null;
+        }
+    };
+
+    return {createTask, createProject, createTaskCard, setTaskData, getTaskData, removeTaskData, checkTaskCardDate};
 })();
 export { toDo };

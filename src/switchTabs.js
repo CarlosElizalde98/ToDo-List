@@ -13,17 +13,24 @@ const switchTabs = (()=> {
                 inboxHeader.classList.add('container-header');
                 inboxHeader.textContent = item;
                 createPage.addInboxItem(inbox, inboxHeader);
-            
+                addTaskEventListener();
             }
 
+            else if (item == "Today"){
+                inbox.innerHTML = "";
+                const inboxHeader = document.createElement('h1');
+                inboxHeader.classList.add('container-header');
+                inboxHeader.textContent = item;
+                createPage.addTodayItems(inbox, inboxHeader );
+            }
             else {
             inbox.innerHTML = "";
             inbox.textContent = "";
             const header = document.createElement('h1');
             header.classList.add('container-header');
             header.textContent = item;
-          
-            inbox.appendChild(header);
+            createPage.addInboxItem(inbox, header);
+            addTaskEventListener();
             }
     }
 
@@ -135,6 +142,7 @@ const switchTabs = (()=> {
                 e.preventDefault();
                 btn.classList.add('active');
                 let btnIndexPlace = btn.getAttribute('value');
+             
                 toDo.removeTaskData(btnIndexPlace);
                 switchTabs.switchTab('Inbox');
         })});

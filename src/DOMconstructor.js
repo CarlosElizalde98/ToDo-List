@@ -1,6 +1,7 @@
 import { switchTabs } from './switchTabs.js';
 import {toDo} from './toDoConstructor.js';
 
+
 const createPage = (()=> {
     const body = document.querySelector('#content');
 
@@ -34,7 +35,6 @@ const createPage = (()=> {
         const taskButton = addProjectButton("Add Project");
         taskButton.classList.add('add-sidebar-form');
     
-
         sidebarContent.appendChild(inbox);
         sidebarContent.appendChild(today);
         sidebarContent.appendChild(thisWeek);
@@ -73,7 +73,31 @@ const createPage = (()=> {
         inbox.appendChild(header);
         inbox.appendChild(taskButton);
 
-        checkCardLocalStorage();
+        if(!(header.textContent.includes("Project") || header.textContent.includes("Today"))) {
+            checkCardLocalStorage();
+        }
+    }
+
+    const addTodayItems = (inbox, header) => {
+        inbox.appendChild(header);
+        let title = header.textContent;
+        for (let i = 0; i < localStorage.length; i++){
+            let taskObject = toDo.getTaskData(localStorage.key(i));
+            if (taskObject.hasOwnProperty("dueDate")){
+                const result = toDo.checkTaskCardDate(title, taskObject);
+                if (result != null) {
+                    const card = toDo.createTaskCard(result);
+                    addOtherCard(inbox, card);
+                }
+            }
+            
+        }
+    }
+
+    const addOtherCard = (inbox, taskCard) => {
+     
+        inbox.appendChild(taskCard);
+        switchTabs.removeCardListener();
     }
 
     const addTaskCard = (taskCard) => {
@@ -133,7 +157,6 @@ const createPage = (()=> {
         if (localStorage.length > 0) {
             for (let i = 0; i < localStorage.length; i++){
                 if (!(localStorage.key(i).includes("Project"))) {
-                    console.log(localStorage.key(i));
                     let task = toDo.getTaskData(localStorage.key(i));
                     let taskObject = toDo.createTaskCard(task, i);
                     addTaskCard(taskObject); 
@@ -154,7 +177,7 @@ const createPage = (()=> {
 
 
     return { createNavBar, createSideBar, createInbox, 
-        addSidebarItem, addInboxItem, addTaskCard, checkCardLocalStorage };
+        addSidebarItem, addInboxItem, addTaskCard, checkCardLocalStorage, addTodayItems };
 })();
 
 const createForms = (() => {
