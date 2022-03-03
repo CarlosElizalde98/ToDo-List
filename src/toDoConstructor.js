@@ -22,6 +22,24 @@ const toDo = (() => {
         return newProject;
     }
 
+    function createProjectCard(projectObj){
+        const option = document.createElement('div');
+        option.classList.add('sidebar-item');
+        option.setAttribute('name', projectObj.title);
+        const optionText = document.createElement('p');
+        optionText.classList.add('sidebar-item-heading');
+        optionText.textContent = projectObj.id;
+        option.appendChild(optionText);
+
+        const removeBtn = document.createElement('button');
+        removeBtn.classList.add('remove-project-button');
+        removeBtn.setAttribute('id', projectObj.title);
+        removeBtn.textContent = "X";
+        option.appendChild(removeBtn);
+
+        return option;
+    }
+
     function createTaskCard(taskObject) {
         const taskCard = document.createElement('div');
         taskCard.classList.add('task-card-container');
@@ -98,6 +116,7 @@ const toDo = (() => {
         }
     };
 
-    return {createTask, createProject, createTaskCard, setTaskData, getTaskData, removeTaskData, checkTaskCardDate};
+    return {createTask, createProject, createTaskCard, setTaskData, getTaskData, removeTaskData, 
+        checkTaskCardDate, createProjectCard};
 })();
 export { toDo };

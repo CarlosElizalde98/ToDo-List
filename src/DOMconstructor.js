@@ -47,64 +47,6 @@ const createPage = (()=> {
         checkProjectLocalStorage();
     }
 
-    const addSidebarItem = (item) => {
-        
-        const newItem = addProjectButton(item);
-        const removeBtn = document.createElement('button');
-        removeBtn.classList.add('remove-project-button');
-        removeBtn.setAttribute('id', item);
-        removeBtn.textContent = "X";
-        const newItemName = newItem.getAttribute('name');
-        newItem.appendChild(removeBtn);
-        const sidebarContent = document.querySelector('.sidebar-content');
-        const addTask = document.querySelector('.add-sidebar-form');
-        newItem.addEventListener('click', () => {
-            switchTabs.switchTab(newItemName);
-        });
-       
-        sidebarContent.insertBefore(newItem, addTask);
-    }
-     
-    const addInboxItem = (inbox, header) => {
-
-        const taskButton = addInboxButton("Add Task");
-        taskButton.classList.add('add-taskform');
-
-        inbox.appendChild(header);
-        inbox.appendChild(taskButton);
-
-        if(!(header.textContent.includes("Project") || header.textContent.includes("Today"))) {
-            checkCardLocalStorage();
-        }
-    }
-
-    const addScheduledItems = (inbox, header) => {
-        inbox.appendChild(header);
-        let title = header.textContent;
-        for (let i = 0; i < localStorage.length; i++){
-            let taskObject = toDo.getTaskData(localStorage.key(i));
-            if (taskObject.hasOwnProperty("dueDate")){
-                const result = toDo.checkTaskCardDate(title, taskObject);
-                if (result != null) {
-                    const card = toDo.createTaskCard(result);
-                    addOtherCard(inbox, card);
-                }
-            } 
-        }
-    }
-
-    const addOtherCard = (inbox, taskCard) => {
-        inbox.appendChild(taskCard);
-        switchTabs.removeCardListener();
-    }
-
-    const addTaskCard = (taskCard) => {
-        const inbox = document.querySelector('.inbox-container');
-        const taskFormButton = document.querySelector('.add-taskform');
-        inbox.insertBefore(taskCard, taskFormButton);
-        switchTabs.removeCardListener();
-    }
-
     const createInbox = () => {
         const inbox = document.createElement('div');
         inbox.classList.add('inbox-container');
@@ -124,11 +66,63 @@ const createPage = (()=> {
         checkCardLocalStorage();
     }
 
-    function addNavBarText() {
-        const navbarText = document.createElement('h1');
-        navbarText.textContent = "To-Do List";
-        return navbarText;
-    };
+    const addSidebarItem = (item) => {
+        
+        const newItem = addProjectButton(item);
+        const removeBtn = document.createElement('button');
+        removeBtn.classList.add('remove-project-button');
+        removeBtn.setAttribute('id', item);
+        removeBtn.textContent = "X";
+        const newItemName = newItem.getAttribute('name');
+        newItem.appendChild(removeBtn);
+        const sidebarContent = document.querySelector('.sidebar-content');
+        const addTask = document.querySelector('.add-sidebar-form');
+        newItem.addEventListener('click', () => {
+            switchTabs.switchTab(newItemName);
+        });
+       
+        sidebarContent.insertBefore(newItem, addTask);
+    }
+     
+    const addDefaultInboxItem = (inbox, header) => {
+
+        const taskButton = addInboxButton("Add Task");
+        taskButton.classList.add('add-taskform');
+
+        inbox.appendChild(header);
+        inbox.appendChild(taskButton);
+
+        if(!(header.textContent.includes("Project"))) {
+            checkCardLocalStorage();
+        }
+    }
+
+    const addScheduledItems = (inbox, header) => {
+        inbox.appendChild(header);
+        let title = header.textContent;
+        for (let i = 0; i < localStorage.length; i++){
+            let taskObject = toDo.getTaskData(localStorage.key(i));
+            if (taskObject.hasOwnProperty("dueDate")){
+                const result = toDo.checkTaskCardDate(title, taskObject);
+                if (result != null) {
+                    const card = toDo.createTaskCard(result);
+                    addScheduledCard(inbox, card);
+                }
+            } 
+        }
+    }
+
+    const addScheduledCard = (inbox, taskCard) => {
+        inbox.appendChild(taskCard);
+        switchTabs.removeCardListener();
+    }
+
+    const addDefaultTaskCard = (taskCard) => {
+        const inbox = document.querySelector('.inbox-container');
+        const taskFormButton = document.querySelector('.add-taskform');
+        inbox.insertBefore(taskCard, taskFormButton);
+        switchTabs.removeCardListener();
+    }
 
     function addProjectButton(heading) {
         const option = document.createElement('div');
@@ -157,7 +151,7 @@ const createPage = (()=> {
                 if (!(localStorage.key(i).includes("Project"))) {
                     let task = toDo.getTaskData(localStorage.key(i));
                     let taskObject = toDo.createTaskCard(task, i);
-                    addTaskCard(taskObject); 
+                    addDefaultTaskCard(taskObject); 
                 } 
             } 
         }
@@ -173,9 +167,27 @@ const createPage = (()=> {
         }
     };
 
+    function addNavBarText() {
+        const navbarText = document.createElement('h1');
+        navbarText.textContent = "To-Do List";
+        return navbarText;
+    };
+
+    function addUserProject(projectObj){
+       const newItem = toDo.createProjectCard(projectObj);
+       console.log(newItem);
+       const sidebarContent = document.querySelector('.sidebar-content');
+        const addTask = document.querySelector('.add-sidebar-form');
+        newItem.addEventListener('click', () => {
+            switchTabs.switchTab(projectObj.id);
+        });
+       
+        sidebarContent.insertBefore(newItem, addTask);
+    }
+
 
     return { createNavBar, createSideBar, createInbox, 
-        addSidebarItem, addInboxItem, addTaskCard, addScheduledItems };
+        addSidebarItem, addDefaultInboxItem, addDefaultTaskCard, addScheduledItems, checkProjectLocalStorage, addUserProject};
 })();
 
 const createForms = (() => {

@@ -1,4 +1,4 @@
-import { add } from 'date-fns';
+
 import {createPage, createForms } from './DOMconstructor.js';
 import {toDo} from './toDoConstructor.js';
 
@@ -6,13 +6,13 @@ const switchTabs = (()=> {
 
     const switchTab = (item) => {
         const inbox = document.querySelector('.inbox-container');
-        
+
             if (item == "Inbox") {
                 inbox.innerHTML = "";
                 const inboxHeader = document.createElement('h1');
                 inboxHeader.classList.add('container-header');
                 inboxHeader.textContent = item;
-                createPage.addInboxItem(inbox, inboxHeader);
+                createPage.addDefaultInboxItem(inbox, inboxHeader);
                 addTaskEventListener();
             }
 
@@ -30,7 +30,7 @@ const switchTabs = (()=> {
             const header = document.createElement('h1');
             header.classList.add('container-header');
             header.textContent = item;
-            createPage.addInboxItem(inbox, header);
+            createPage.addDefaultInboxItem(inbox, header);
             addTaskEventListener();
             }
     }
@@ -75,10 +75,12 @@ const switchTabs = (()=> {
             projSubmitBtn.addEventListener('click', function(event) {
                 event.preventDefault();
                 const title = document.getElementById('project-title').value;
-                const id = "Project " + title;
+                const id = title + " Project";
                 const newProject = toDo.createProject(title, id);
                 toDo.setTaskData(id, newProject);
-
+                sidebar.removeChild(sidebar.lastChild);
+                addProject.classList.toggle('form-popup');
+                createPage.addUserProject(toDo.getTaskData(id));
             });
         });
     };
@@ -130,10 +132,10 @@ const switchTabs = (()=> {
             
             toDo.setTaskData(title, newTask);
             const taskCard = toDo.createTaskCard(newTask);
-            taskFormContainer.reset()
+            // taskFormContainer.reset()
             addTask.classList.remove("item-form-popup");
             taskForm.classList.remove("item-form-popup-active");
-            createPage.addTaskCard(taskCard);
+            createPage.addDefaultTaskCard(taskCard);
         })
     };
         
@@ -151,10 +153,12 @@ const switchTabs = (()=> {
 
     function addRemoveProjectListener () {
         const removeBtn = document.querySelectorAll(".remove-project-button");
+        const sidebar = document.querySelector(".sidebar-container")
         removeBtn.forEach((btn) => {btn.addEventListener('click', (event) => {
             event.preventDefault();
             const indexPlace = btn.getAttribute('id');
             toDo.removeTaskData(indexPlace);
+            
         })});
     }
     
