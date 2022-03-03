@@ -78,7 +78,7 @@ const createPage = (()=> {
         }
     }
 
-    const addTodayItems = (inbox, header) => {
+    const addScheduledItems = (inbox, header) => {
         inbox.appendChild(header);
         let title = header.textContent;
         for (let i = 0; i < localStorage.length; i++){
@@ -89,13 +89,11 @@ const createPage = (()=> {
                     const card = toDo.createTaskCard(result);
                     addOtherCard(inbox, card);
                 }
-            }
-            
+            } 
         }
     }
 
     const addOtherCard = (inbox, taskCard) => {
-     
         inbox.appendChild(taskCard);
         switchTabs.removeCardListener();
     }
@@ -177,7 +175,7 @@ const createPage = (()=> {
 
 
     return { createNavBar, createSideBar, createInbox, 
-        addSidebarItem, addInboxItem, addTaskCard, checkCardLocalStorage, addTodayItems };
+        addSidebarItem, addInboxItem, addTaskCard, addScheduledItems };
 })();
 
 const createForms = (() => {

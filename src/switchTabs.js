@@ -16,13 +16,14 @@ const switchTabs = (()=> {
                 addTaskEventListener();
             }
 
-            else if (item == "Today"){
+            else if (item == "Today" || item == "This Week"){
                 inbox.innerHTML = "";
                 const inboxHeader = document.createElement('h1');
                 inboxHeader.classList.add('container-header');
                 inboxHeader.textContent = item;
-                createPage.addTodayItems(inbox, inboxHeader );
+                createPage.addScheduledItems(inbox, inboxHeader );
             }
+           
             else {
             inbox.innerHTML = "";
             inbox.textContent = "";
@@ -142,9 +143,9 @@ const switchTabs = (()=> {
                 e.preventDefault();
                 btn.classList.add('active');
                 let btnIndexPlace = btn.getAttribute('value');
-             
+                const currentPage = document.querySelector('.container-header');
                 toDo.removeTaskData(btnIndexPlace);
-                switchTabs.switchTab('Inbox');
+                switchTabs.switchTab(currentPage.textContent);
         })});
     };
 
