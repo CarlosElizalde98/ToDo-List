@@ -12,7 +12,7 @@ const constructPage = (() =>{
     switchTabs.assignLinks();
     
     switchTabs.addTaskEventListener();
-    
+    switchTabs.removeProjectListener();
 })();
 
 

@@ -23,14 +23,16 @@ const switchTabs = (()=> {
             const header = document.createElement('h1');
             header.classList.add('container-header');
             header.textContent = item;
+          
             inbox.appendChild(header);
             }
     }
 
     const assignLinks = () => {
 
-        const items = document.querySelectorAll(".sidebar-item");
+        const items = document.querySelectorAll(".sidebar-item-heading");
         items.forEach((item) => {item.addEventListener("click", () => {
+            console.log(item);
             switchTab(item.textContent);
         })});
 
