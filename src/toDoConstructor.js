@@ -78,7 +78,7 @@ const toDo = (() => {
         taskCard.appendChild(taskCardDate);
         taskCard.appendChild(taskCardPriority);
         taskCard.appendChild(removeTaskCardBtn);
-        console.log(taskCard);
+        
         return taskCard;
     }
 
@@ -107,7 +107,6 @@ const toDo = (() => {
             let date = parse(taskObject.dueDate, 'yyyy-MM-dd', new Date());
             if (isThisWeek(date)){
                 let thisWeek = taskObject;
-                console.log(thisWeek);
                 return thisWeek;
             }
         }

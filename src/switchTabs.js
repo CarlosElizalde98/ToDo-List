@@ -158,6 +158,7 @@ const switchTabs = (()=> {
             event.preventDefault();
             const indexPlace = btn.getAttribute('id');
             toDo.removeTaskData(indexPlace);
+            switchTabs.switchTab("Inbox");
             
         })});
     }
