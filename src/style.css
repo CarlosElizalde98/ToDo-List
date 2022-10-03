@@ -1,9 +1,9 @@
-@import url("https://fonts.googleapis.com/css2?family=Hahmlet&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Public+Sans:ital@1&display=swap");
 :root {
   --navbar-color: #1981e6;
   --sidebar-color: #479aeb;
   --hover-color: #1774cf;
-  --hamlet-font: "Hahmlet", serif;
+  --hamlet-font: "Public Sans", sans-serif;
   --cancel-btn-color: #ff3333;
   --submit-btn-color: #1aff8c;
 }
@@ -57,9 +57,10 @@ body {
   justify-content: start;
   align-items: center;
   color: white;
-  padding-left: 10px;
+  padding-left: 1rem;
   border-radius: 2px;
   max-height: 50px;
+  font-size: 1em;
 }
 
 .sidebar-item > .inbox-item {
@@ -175,11 +176,11 @@ input[type="text"] {
 
 .task-card-container {
   display: flex;
-  justify-content: space-between;
+  justify-content: space-evenly;
   margin: 12px;
   padding: 12px;
   align-items: center;
-  width: 50%;
+  width: 100vmin;
   height: 50px;
   border: 2px solid var(--navbar-color);
   border-radius: 12px;

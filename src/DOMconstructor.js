@@ -254,18 +254,18 @@ const createForms = (() => {
     taskDescInput.classList.add("item-form-text");
 
     //Manages Priority Datalist area
-    const priorityInput = document.createElement("input");
-    priorityInput.setAttribute("list", "priorities");
-    priorityInput.setAttribute("placeholder", "Priority");
-    priorityInput.setAttribute("id", "priorities");
-    const priorityInputList = document.createElement("datalist");
+
+    const priorityInputList = document.createElement("select");
     priorityInputList.setAttribute("id", "priorities-datalist");
     const lowPriority = document.createElement("option");
     lowPriority.setAttribute("value", "Low");
+    lowPriority.textContent = "Low";
     const medPriority = document.createElement("option");
     medPriority.setAttribute("value", "Medium");
+    medPriority.textContent = "Medium";
     const highPriority = document.createElement("option");
     highPriority.setAttribute("value", "High");
+    highPriority.textContent = "High";
     priorityInputList.appendChild(lowPriority);
     priorityInputList.appendChild(medPriority);
     priorityInputList.appendChild(highPriority);
@@ -289,7 +289,6 @@ const createForms = (() => {
 
     taskForm.appendChild(taskInput);
     taskForm.appendChild(taskDescInput);
-    taskForm.appendChild(priorityInput);
     taskForm.appendChild(priorityInputList);
     taskForm.appendChild(taskDate);
     taskForm.appendChild(submitBtn);
