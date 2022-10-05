@@ -38,11 +38,11 @@ const switchTabs = (() => {
         switchTab(item.childNodes[0].textContent);
       });
     });
-
     addSidebarEventListeners();
   };
 
   function addSidebarEventListeners() {
+    const sidebar = document.querySelector(".sidebar-content");
     // Listens for Add Project Button being pressed.
     const addProject = document.querySelector(".add-sidebar-form");
     addProject.addEventListener("click", () => {
@@ -50,15 +50,14 @@ const switchTabs = (() => {
     });
 
     const removeBtn = document.querySelectorAll(".remove-project-button");
-    removeBtn.forEach((btn) => {
-      btn.addEventListener("click", (event) => {
-        event.preventDefault();
-        console.log(event);
-        const indexPlace = btn.getAttribute("id");
-        toDo.removeTaskData(indexPlace);
-        switchTabs.switchTab("Inbox");
+    if (removeBtn) {
+      removeBtn.forEach((btn) => {
+        btn.addEventListener("click", (event) => {
+          event.preventDefault();
+          handleProjectRemoval(sidebar, btn);
+        });
       });
-    });
+    }
   }
 
   function addProjectListeners() {
@@ -117,41 +116,17 @@ const switchTabs = (() => {
     const taskFormContainer = document.querySelector(".item-form-container");
     const taskForm = document.querySelector(".item-form-popup");
     const inbox = document.querySelector(".inbox-container");
-
     // Listens for Task Submit Button being pressed.
-
     const itemSubmitBtn = document.querySelector(".item-submit-btn");
     itemSubmitBtn.addEventListener("click", (event) => {
       event.preventDefault();
-      const title = document.getElementById("title").value;
-      const description = document.getElementById("description").value;
-      const dueDate = document.getElementById("dueDate").value;
-      const priority = document.getElementById("priorities-datalist").value;
-      const location = document.getElementById("container-header").value;
-      console.log(location);
-
-      const newTask = toDo.createTask(
-        title,
-        description,
-        dueDate,
-        priority,
-        location
-      );
-
-      inbox.removeChild(inbox.lastElementChild);
-      addTask.classList.toggle("item-form-popup");
-
-      toDo.setTaskData(title, newTask);
-      const taskCard = toDo.createTaskCard(newTask);
-      // taskFormContainer.reset()
-      addTask.classList.remove("item-form-popup");
-      taskForm.classList.remove("item-form-popup-active");
-      createPage.addDefaultTaskCard(taskCard);
+      submitTaskInfo(addTask, taskForm, inbox);
     });
   }
 
   function removeCardListener() {
     const removeCardBtn = document.querySelectorAll(".remove-card-btn");
+
     removeCardBtn.forEach((btn) => {
       btn.addEventListener("click", (e) => {
         e.preventDefault();
@@ -164,18 +139,41 @@ const switchTabs = (() => {
     });
   }
 
-  // function addRemoveProjectListener() {
-  //   const removeBtn = document.querySelectorAll(".remove-project-button");
-  //   const sidebar = document.querySelector(".sidebar-container");
-  //   removeBtn.forEach((btn) => {
-  //     btn.addEventListener("click", (event) => {
-  //       event.preventDefault();
-  //       const indexPlace = btn.getAttribute("id");
-  //       toDo.removeTaskData(indexPlace);
-  //       switchTabs.switchTab("Inbox");
-  //     });
-  //   });
-  // }
+  function submitTaskInfo(addTask, taskForm, inbox) {
+    const title = document.getElementById("title").value;
+    const description = document.getElementById("description").value;
+    const dueDate = document.getElementById("dueDate").value;
+    const priority = document.getElementById("priorities-datalist").value;
+    const location = document.getElementById("container-header").value;
+    console.log(location);
+
+    const newTask = toDo.createTask(
+      title,
+      description,
+      dueDate,
+      priority,
+      location
+    );
+
+    inbox.removeChild(inbox.lastElementChild);
+    addTask.classList.toggle("item-form-popup");
+
+    toDo.setTaskData(title, newTask);
+    const taskCard = toDo.createTaskCard(newTask);
+    // taskFormContainer.reset()
+    addTask.classList.remove("item-form-popup");
+    taskForm.classList.remove("item-form-popup-active");
+    createPage.addDefaultTaskCard(taskCard);
+  }
+
+  function handleProjectRemoval(sidebar, removeBtn) {
+    const indexPlace = removeBtn.getAttribute("id");
+    toDo.removeTaskData(indexPlace);
+    sidebar.textContent = "";
+    createPage.createSideBar();
+    assignLinks();
+    switchTabs.switchTab("Inbox");
+  }
 
   return {
     switchTab,

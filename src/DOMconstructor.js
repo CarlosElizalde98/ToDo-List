@@ -52,6 +52,7 @@ const createPage = (() => {
 
     const header = document.createElement("h1");
     header.classList.add("container-header");
+    header.setAttribute("id", "container-header");
     header.textContent = "Inbox";
 
     const taskButton = addInboxButton("Add Task");
