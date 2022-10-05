@@ -6,23 +6,25 @@ const switchTabs = (() => {
     const inbox = document.querySelector(".inbox-container");
 
     if (item == "Inbox") {
-      inbox.innerHTML = "";
+      inbox.textContent = "";
       const inboxHeader = document.createElement("h1");
       inboxHeader.classList.add("container-header");
+      inboxHeader.setAttribute("id", "container-header");
       inboxHeader.textContent = item;
       createPage.addDefaultInboxItem(inbox, inboxHeader);
       addTaskEventListener();
     } else if (item == "Today" || item == "This Week") {
-      inbox.innerHTML = "";
+      inbox.textContent = "";
       const inboxHeader = document.createElement("h1");
       inboxHeader.classList.add("container-header");
+      inboxHeader.setAttribute("id", "container-header");
       inboxHeader.textContent = item;
       createPage.addScheduledItems(inbox, inboxHeader);
     } else {
-      inbox.innerHTML = "";
       inbox.textContent = "";
       const header = document.createElement("h1");
       header.classList.add("container-header");
+      header.setAttribute("id", "container-header");
       header.textContent = item;
       createPage.addDefaultInboxItem(inbox, header);
       addTaskEventListener();
@@ -41,40 +43,51 @@ const switchTabs = (() => {
   };
 
   function addSidebarEventListeners() {
-    const addTask = document.querySelector(".add-taskform");
-    const taskForm = document.querySelector(".item-form-popup");
-    const taskFormContainer = document.querySelector(".item-form-container");
-    const sidebar = document.querySelector(".sidebar-content");
-
     // Listens for Add Project Button being pressed.
     const addProject = document.querySelector(".add-sidebar-form");
-    const projectFormContainer = document.querySelector(".form-container");
-    addProject.addEventListener("click", function () {
-      const form = createForms.createProjectForm();
-      sidebar.appendChild(form);
-      const projectForm = document.querySelector(".form-popup");
-      projectForm.classList.toggle("form-popup-active");
+    addProject.addEventListener("click", () => {
+      addProjectListeners();
+    });
+
+    const removeBtn = document.querySelectorAll(".remove-project-button");
+    removeBtn.forEach((btn) => {
+      btn.addEventListener("click", (event) => {
+        event.preventDefault();
+        console.log(event);
+        const indexPlace = btn.getAttribute("id");
+        toDo.removeTaskData(indexPlace);
+        switchTabs.switchTab("Inbox");
+      });
+    });
+  }
+
+  function addProjectListeners() {
+    const sidebar = document.querySelector(".sidebar-content");
+    const form = createForms.createProjectForm();
+    sidebar.appendChild(form);
+    const projectForm = document.querySelector(".form-popup");
+    const addProject = document.querySelector(".add-sidebar-form");
+    projectForm.classList.toggle("form-popup-active");
+    addProject.classList.toggle("form-popup");
+
+    const projCancelBtn = document.querySelector(".cancel-btn");
+    const projSubmitBtn = document.querySelector(".submit-btn");
+
+    projCancelBtn.addEventListener("click", (event) => {
+      event.preventDefault();
+      projectForm.remove();
       addProject.classList.toggle("form-popup");
+    });
 
-      const projCancelBtn = document.querySelector(".cancel-btn");
-      const projSubmitBtn = document.querySelector(".submit-btn");
-
-      projCancelBtn.addEventListener("click", function (event) {
-        event.preventDefault();
-        projectForm.remove();
-        addProject.classList.toggle("form-popup");
-      });
-
-      projSubmitBtn.addEventListener("click", function (event) {
-        event.preventDefault();
-        const title = document.getElementById("project-title").value;
-        const id = title + " Project";
-        const newProject = toDo.createProject(title, id);
-        toDo.setTaskData(id, newProject);
-        sidebar.removeChild(sidebar.lastChild);
-        addProject.classList.toggle("form-popup");
-        createPage.addUserProject(toDo.getTaskData(id));
-      });
+    projSubmitBtn.addEventListener("click", (event) => {
+      event.preventDefault();
+      const title = document.getElementById("project-title").value;
+      const id = title + " Project";
+      const newProject = toDo.createProject(title, id);
+      toDo.setTaskData(id, newProject);
+      sidebar.removeChild(sidebar.lastChild);
+      addProject.classList.toggle("form-popup");
+      createPage.addUserProject(toDo.getTaskData(id));
     });
   }
 
@@ -90,7 +103,7 @@ const switchTabs = (() => {
       taskForm.classList.toggle("item-form-popup-active");
       const itemCancelBtn = document.querySelector(".item-cancel-btn");
 
-      itemCancelBtn.addEventListener("click", function (event) {
+      itemCancelBtn.addEventListener("click", (event) => {
         event.preventDefault();
         inbox.removeChild(inbox.lastElementChild);
         addTask.classList.toggle("item-form-popup");
@@ -114,8 +127,16 @@ const switchTabs = (() => {
       const description = document.getElementById("description").value;
       const dueDate = document.getElementById("dueDate").value;
       const priority = document.getElementById("priorities-datalist").value;
+      const location = document.getElementById("container-header").value;
+      console.log(location);
 
-      const newTask = toDo.createTask(title, description, dueDate, priority);
+      const newTask = toDo.createTask(
+        title,
+        description,
+        dueDate,
+        priority,
+        location
+      );
 
       inbox.removeChild(inbox.lastElementChild);
       addTask.classList.toggle("item-form-popup");
@@ -143,25 +164,24 @@ const switchTabs = (() => {
     });
   }
 
-  function addRemoveProjectListener() {
-    const removeBtn = document.querySelectorAll(".remove-project-button");
-    const sidebar = document.querySelector(".sidebar-container");
-    removeBtn.forEach((btn) => {
-      btn.addEventListener("click", (event) => {
-        event.preventDefault();
-        const indexPlace = btn.getAttribute("id");
-        toDo.removeTaskData(indexPlace);
-        switchTabs.switchTab("Inbox");
-      });
-    });
-  }
+  // function addRemoveProjectListener() {
+  //   const removeBtn = document.querySelectorAll(".remove-project-button");
+  //   const sidebar = document.querySelector(".sidebar-container");
+  //   removeBtn.forEach((btn) => {
+  //     btn.addEventListener("click", (event) => {
+  //       event.preventDefault();
+  //       const indexPlace = btn.getAttribute("id");
+  //       toDo.removeTaskData(indexPlace);
+  //       switchTabs.switchTab("Inbox");
+  //     });
+  //   });
+  // }
 
   return {
     switchTab,
     assignLinks,
     addTaskEventListener,
     removeCardListener,
-    addRemoveProjectListener,
   };
 })();
 
