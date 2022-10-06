@@ -5,37 +5,35 @@ const switchTabs = (() => {
   const switchTab = (item) => {
     const inbox = document.querySelector(".inbox-container");
 
-    if (item == "Inbox") {
-      inbox.textContent = "";
-      const inboxHeader = document.createElement("h1");
-      inboxHeader.classList.add("container-header");
-      inboxHeader.setAttribute("id", "container-header");
-      inboxHeader.textContent = item;
+    if (
+      item === "Inbox" ||
+      (item !== "Inbox" && item !== "Today" && item !== "This Week")
+    ) {
+      const inboxHeader = resetDefaultInboxHeader(inbox, item);
       createPage.addDefaultInboxItem(inbox, inboxHeader);
       addTaskEventListener();
     } else if (item == "Today" || item == "This Week") {
-      inbox.textContent = "";
-      const inboxHeader = document.createElement("h1");
-      inboxHeader.classList.add("container-header");
-      inboxHeader.setAttribute("id", "container-header");
-      inboxHeader.textContent = item;
+      const inboxHeader = resetDefaultInboxHeader(inbox, item);
       createPage.addScheduledItems(inbox, inboxHeader);
     } else {
-      inbox.textContent = "";
-      const header = document.createElement("h1");
-      header.classList.add("container-header");
-      header.setAttribute("id", "container-header");
-      header.textContent = item;
-      createPage.addDefaultInboxItem(inbox, header);
-      addTaskEventListener();
+      return null;
     }
   };
+
+  function resetDefaultInboxHeader(inbox, item) {
+    inbox.textContent = "";
+    const inboxHeader = document.createElement("h1");
+    inboxHeader.classList.add("container-header");
+    inboxHeader.setAttribute("id", "container-header");
+    inboxHeader.textContent = item;
+    return inboxHeader;
+  }
 
   const assignLinks = () => {
     const items = document.querySelectorAll(".sidebar-item");
     items.forEach((item) => {
       item.addEventListener("click", () => {
-        switchTab(item.childNodes[0].textContent);
+        switchTab(item.getAttribute("name"));
       });
     });
     addSidebarEventListeners();
@@ -54,7 +52,7 @@ const switchTabs = (() => {
       removeBtn.forEach((btn) => {
         btn.addEventListener("click", (event) => {
           event.preventDefault();
-          handleProjectRemoval(sidebar, btn);
+          _handleProjectRemoval(sidebar, btn);
         });
       });
     }
@@ -107,11 +105,11 @@ const switchTabs = (() => {
         inbox.removeChild(inbox.lastElementChild);
         addTask.classList.toggle("item-form-popup");
       });
-      addCardEventListeners();
+      _addCardEventListeners();
     });
   }
 
-  function addCardEventListeners() {
+  function _addCardEventListeners() {
     const addTask = document.querySelector(".add-taskform");
     const taskFormContainer = document.querySelector(".item-form-container");
     const taskForm = document.querySelector(".item-form-popup");
@@ -120,7 +118,7 @@ const switchTabs = (() => {
     const itemSubmitBtn = document.querySelector(".item-submit-btn");
     itemSubmitBtn.addEventListener("click", (event) => {
       event.preventDefault();
-      submitTaskInfo(addTask, taskForm, inbox);
+      _submitTaskInfo(addTask, taskForm, inbox);
     });
   }
 
@@ -139,7 +137,7 @@ const switchTabs = (() => {
     });
   }
 
-  function submitTaskInfo(addTask, taskForm, inbox) {
+  function _submitTaskInfo(addTask, taskForm, inbox) {
     const title = document.getElementById("title").value;
     const description = document.getElementById("description").value;
     const dueDate = document.getElementById("dueDate").value;
@@ -166,13 +164,12 @@ const switchTabs = (() => {
     createPage.addDefaultTaskCard(taskCard);
   }
 
-  function handleProjectRemoval(sidebar, removeBtn) {
+  function _handleProjectRemoval(sidebar, removeBtn) {
     const indexPlace = removeBtn.getAttribute("id");
     toDo.removeTaskData(indexPlace);
     sidebar.textContent = "";
     createPage.createSideBar();
     assignLinks();
-    switchTabs.switchTab("Inbox");
   }
 
   return {
