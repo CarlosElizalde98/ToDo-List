@@ -42,7 +42,7 @@ const switchTabs = (() => {
   function addSidebarEventListeners() {
     const sidebar = document.querySelector(".sidebar-content");
     // Listens for Add Project Button being pressed.
-    const addProject = document.querySelector(".add-sidebar-form");
+    const addProject = document.getElementById("add-sidebar-form");
     addProject.addEventListener("click", () => {
       addProjectListeners();
     });
@@ -60,32 +60,29 @@ const switchTabs = (() => {
 
   function addProjectListeners() {
     const sidebar = document.querySelector(".sidebar-content");
-    const form = createForms.createProjectForm();
-    sidebar.appendChild(form);
-    const projectForm = document.querySelector(".form-popup");
-    const addProject = document.querySelector(".add-sidebar-form");
-    projectForm.classList.toggle("form-popup-active");
-    addProject.classList.toggle("form-popup");
-
+    createPage.showProjectFormPopup();
     const projCancelBtn = document.querySelector(".cancel-btn");
     const projSubmitBtn = document.querySelector(".submit-btn");
 
     projCancelBtn.addEventListener("click", (event) => {
       event.preventDefault();
-      projectForm.remove();
-      addProject.classList.toggle("form-popup");
+      createPage.hideProjectFormPopup();
     });
 
     projSubmitBtn.addEventListener("click", (event) => {
       event.preventDefault();
-      const title = document.getElementById("project-title").value;
-      const id = title + " Project";
-      const newProject = toDo.createProject(title, id);
-      toDo.setTaskData(id, newProject);
-      sidebar.removeChild(sidebar.lastChild);
-      addProject.classList.toggle("form-popup");
-      createPage.addUserProject(toDo.getTaskData(id));
+      const projectTitle = document.getElementById("project-title").value;
+      console.log(projectTitle);
+      handleSubmit(sidebar, projectTitle);
     });
+  }
+
+  function handleSubmit(sideBar, projectTitle) {
+    const id = projectTitle + " Project";
+    const newProject = toDo.createProject(projectTitle, id);
+    toDo.setTaskData(id, newProject);
+    createPage.hideProjectFormPopup();
+    createPage.addUserProject(toDo.getTaskData(id));
   }
 
   function addTaskEventListener() {
@@ -169,7 +166,6 @@ const switchTabs = (() => {
     toDo.removeTaskData(indexPlace);
     sidebar.textContent = "";
     createPage.createSideBar();
-    assignLinks();
   }
 
   return {

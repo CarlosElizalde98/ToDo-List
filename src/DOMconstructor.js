@@ -32,18 +32,22 @@ const createPage = (() => {
     sidebarHeading.classList.add("inbox-header");
 
     const taskButton = addProjectButton("Add Project");
-    taskButton.classList.add("add-sidebar-form");
+    taskButton.setAttribute("id", "add-sidebar-form");
+
+    const form = createForms.createProjectForm();
 
     sidebarContent.appendChild(inbox);
     sidebarContent.appendChild(today);
     sidebarContent.appendChild(thisWeek);
     sidebarContent.appendChild(sidebarHeading);
     sidebarContent.appendChild(taskButton);
+    sidebarContent.appendChild(form);
 
     sideBar.appendChild(sidebarContent);
     body.appendChild(sideBar);
 
     checkProjectLocalStorage();
+    switchTabs.assignLinks();
   };
 
   const createInbox = () => {
@@ -74,13 +78,13 @@ const createPage = (() => {
     removeBtn.textContent = "X";
     const newItemName = newItem.getAttribute("name");
     newItem.appendChild(removeBtn);
-    const sidebarContent = document.querySelector(".sidebar-content");
-    const addTask = document.querySelector(".add-sidebar-form");
+
+    const addTask = document.getElementById("add-sidebar-form");
     newItem.addEventListener("click", () => {
       switchTabs.switchTab(newItemName);
     });
 
-    sidebarContent.insertBefore(newItem, addTask);
+    addTask.parentNode.insertBefore(newItem, addTask);
   };
 
   const addDefaultInboxItem = (inbox, header) => {
@@ -182,6 +186,16 @@ const createPage = (() => {
     sidebarContent.insertBefore(newItem, addTask);
   }
 
+  function showProjectFormPopup() {
+    document.querySelector(".form-popup").style.display = "block";
+    document.getElementById("add-sidebar-form").style.display = "none";
+  }
+
+  function hideProjectFormPopup() {
+    document.querySelector(".form-popup").style.display = "none";
+    document.getElementById("add-sidebar-form").style.display = "block";
+  }
+
   return {
     createNavBar,
     createSideBar,
@@ -192,6 +206,8 @@ const createPage = (() => {
     addScheduledItems,
     checkProjectLocalStorage,
     addUserProject,
+    showProjectFormPopup,
+    hideProjectFormPopup,
   };
 })();
 
