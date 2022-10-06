@@ -36,16 +36,13 @@ const switchTabs = (() => {
         switchTab(item.getAttribute("name"));
       });
     });
-    addSidebarEventListeners();
   };
 
   function addSidebarEventListeners() {
     const sidebar = document.querySelector(".sidebar-content");
     // Listens for Add Project Button being pressed.
-    const addProject = document.getElementById("add-sidebar-form");
-    addProject.addEventListener("click", () => {
-      addProjectListeners();
-    });
+
+    addProjectListeners();
 
     const removeBtn = document.querySelectorAll(".remove-project-button");
     if (removeBtn) {
@@ -59,7 +56,6 @@ const switchTabs = (() => {
   }
 
   function addProjectListeners() {
-    const sidebar = document.querySelector(".sidebar-content");
     createPage.showProjectFormPopup();
     const projCancelBtn = document.querySelector(".cancel-btn");
     const projSubmitBtn = document.querySelector(".submit-btn");
@@ -72,12 +68,11 @@ const switchTabs = (() => {
     projSubmitBtn.addEventListener("click", (event) => {
       event.preventDefault();
       const projectTitle = document.getElementById("project-title").value;
-      console.log(projectTitle);
-      handleSubmit(sidebar, projectTitle);
+      handleSubmit(projectTitle);
     });
   }
 
-  function handleSubmit(sideBar, projectTitle) {
+  function handleSubmit(projectTitle) {
     const id = projectTitle + " Project";
     const newProject = toDo.createProject(projectTitle, id);
     toDo.setTaskData(id, newProject);
@@ -108,7 +103,6 @@ const switchTabs = (() => {
 
   function _addCardEventListeners() {
     const addTask = document.querySelector(".add-taskform");
-    const taskFormContainer = document.querySelector(".item-form-container");
     const taskForm = document.querySelector(".item-form-popup");
     const inbox = document.querySelector(".inbox-container");
     // Listens for Task Submit Button being pressed.
@@ -173,6 +167,7 @@ const switchTabs = (() => {
     assignLinks,
     addTaskEventListener,
     removeCardListener,
+    addSidebarEventListeners,
   };
 })();
 

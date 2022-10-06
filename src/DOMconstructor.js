@@ -48,6 +48,7 @@ const createPage = (() => {
 
     checkProjectLocalStorage();
     switchTabs.assignLinks();
+    switchTabs.addSidebarEventListeners();
   };
 
   const createInbox = () => {
