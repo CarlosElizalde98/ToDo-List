@@ -39,10 +39,9 @@ const switchTabs = (() => {
   };
 
   function addSidebarEventListeners() {
-    console.trace();
     const sidebar = document.querySelector(".sidebar-content");
     // Listens for Add Project Button being pressed.
-
+    addProjectListeners();
     const removeBtn = document.querySelectorAll(".remove-project-button");
     if (removeBtn) {
       removeBtn.forEach((btn) => {
@@ -58,7 +57,8 @@ const switchTabs = (() => {
     const projSubmitBtn = document.querySelector(".submit-btn");
     const addProjectBtn = document.getElementById("add-sidebar-form");
 
-    addProjectBtn.addEventListener("click", () => {
+    addProjectBtn.addEventListener("click", (event) => {
+      event.preventDefault();
       createPage.showProjectFormPopup();
     });
 
@@ -151,7 +151,7 @@ const switchTabs = (() => {
     addTask.classList.toggle("item-form-popup");
 
     toDo.setTaskData(title, newTask);
-    const taskCard = toDo.createTaskCard(newTask);
+    const taskCard = createTaskCard(newTask);
     // taskFormContainer.reset()
     addTask.classList.remove("item-form-popup");
     taskForm.classList.remove("item-form-popup-active");

@@ -19,65 +19,31 @@ const toDo = (() => {
     return newProject;
   }
 
-  function createProjectCard(projectObj) {
-    const option = document.createElement("div");
-    option.classList.add("sidebar-item");
-    option.setAttribute("name", projectObj.title);
-    const optionText = document.createElement("p");
-    optionText.classList.add("sidebar-item-heading");
-    optionText.textContent = projectObj.id;
-    option.appendChild(optionText);
+  const checkCardLocalStorage = () => {
+    let cardArray = [];
+    if (localStorage.length > 0) {
+      for (let i = 0; i < localStorage.length; i++) {
+        if (!localStorage.key(i).includes("Project")) {
+          let key = localStorage.key(i);
+          cardArray.push(getTaskData(key));
+        }
+      }
+    }
+    return cardArray;
+  };
 
-    const removeBtn = document.createElement("button");
-    removeBtn.classList.add("remove-project-button");
-    removeBtn.setAttribute("id", projectObj.title);
-    removeBtn.textContent = "X";
-    option.appendChild(removeBtn);
-
-    return option;
-  }
-
-  function createTaskCard(taskObject) {
-    const taskCard = document.createElement("div");
-    taskCard.classList.add("task-card-container");
-
-    const checkBox = document.createElement("input");
-    checkBox.setAttribute("type", "checkbox");
-    checkBox.setAttribute("id", "completed-check");
-
-    const taskCardTitle = document.createElement("h1");
-    taskCardTitle.classList.add("taskcard-title");
-    taskCardTitle.setAttribute("id", taskObject.title);
-    taskCardTitle.textContent = taskObject.title;
-
-    const taskCardDesc = document.createElement("p");
-    taskCardDesc.classList.add("taskcard-description");
-    // taskCardDesc.setAttribute('id', taskObject.description);
-    taskCardDesc.textContent = taskObject.description;
-
-    const taskCardDate = document.createElement("p");
-    taskCardDate.classList.add("taskcard-date");
-    taskCardDate.textContent = taskObject.dueDate;
-
-    const taskCardPriority = document.createElement("p");
-    taskCardPriority.classList.add("taskcard-priority");
-    taskCardPriority.textContent = taskObject.priority;
-
-    const removeTaskCardBtn = document.createElement("button");
-    removeTaskCardBtn.classList.add("remove-card-btn");
-    removeTaskCardBtn.setAttribute("type", "submit");
-    removeTaskCardBtn.setAttribute("value", taskObject.title);
-    removeTaskCardBtn.textContent = "X";
-
-    taskCard.appendChild(checkBox);
-    taskCard.appendChild(taskCardTitle);
-    taskCard.appendChild(taskCardDesc);
-    taskCard.appendChild(taskCardDate);
-    taskCard.appendChild(taskCardPriority);
-    taskCard.appendChild(removeTaskCardBtn);
-
-    return taskCard;
-  }
+  const checkProjectLocalStorage = () => {
+    let projArray = [];
+    if (localStorage.length > 0) {
+      for (let i = 0; i < localStorage.length; i++) {
+        if (localStorage.key(i).includes("Project")) {
+          let key = localStorage.key(i);
+          projArray.push(getTaskData(key));
+        }
+      }
+    }
+    return projArray;
+  };
 
   const setTaskData = (title, taskCard) => {
     localStorage.setItem(title, JSON.stringify(taskCard));
@@ -113,12 +79,12 @@ const toDo = (() => {
   return {
     createTask,
     createProject,
-    createTaskCard,
+    checkProjectLocalStorage,
     setTaskData,
     getTaskData,
     removeTaskData,
     checkTaskCardDate,
-    createProjectCard,
+    checkCardLocalStorage,
   };
 })();
 export { toDo };
