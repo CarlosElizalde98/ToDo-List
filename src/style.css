@@ -54,7 +54,7 @@ body {
 }
 .sidebar-item {
   display: flex;
-  justify-content: start;
+  justify-content: space-between;
   align-items: center;
   color: white;
   padding-left: 1rem;

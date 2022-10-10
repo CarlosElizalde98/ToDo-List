@@ -55,6 +55,7 @@ const toDo = (() => {
   }
 
   function removeTaskData(title) {
+    console.log(title);
     localStorage.removeItem(title);
   }
 

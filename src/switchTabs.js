@@ -30,7 +30,7 @@ const switchTabs = (() => {
   }
 
   const assignLinks = () => {
-    const items = document.querySelectorAll(".sidebar-item");
+    const items = document.querySelectorAll(".sidebar-item-heading");
     items.forEach((item) => {
       item.addEventListener("click", (e) => {
         switchTab(item.getAttribute("name"));
@@ -38,24 +38,21 @@ const switchTabs = (() => {
     });
   };
 
-  function addSidebarEventListeners() {
-    const sidebar = document.querySelector(".sidebar-content");
-    // Listens for Add Project Button being pressed.
-    addProjectListeners();
-    const removeBtn = document.querySelectorAll(".remove-project-button");
-    if (removeBtn) {
-      removeBtn.forEach((btn) => {
-        btn.addEventListener("click", () => {
-          _handleProjectRemoval(sidebar, btn);
-        });
-      });
-    }
-  }
-
   function addProjectListeners() {
     const projCancelBtn = document.querySelector(".cancel-btn");
     const projSubmitBtn = document.querySelector(".submit-btn");
     const addProjectBtn = document.getElementById("add-sidebar-form");
+    const projects = document.querySelector(".project-content");
+    // Listens for Add Project Button being pressed.
+
+    const removeBtn = document.querySelectorAll(".remove-project-button");
+    if (removeBtn) {
+      removeBtn.forEach((btn) => {
+        btn.addEventListener("click", () => {
+          _handleProjectRemoval(projects, btn);
+        });
+      });
+    }
 
     addProjectBtn.addEventListener("click", (event) => {
       event.preventDefault();
@@ -160,9 +157,9 @@ const switchTabs = (() => {
 
   function _handleProjectRemoval(sidebar, removeBtn) {
     const indexPlace = removeBtn.getAttribute("id");
+
     toDo.removeTaskData(indexPlace);
-    sidebar.innerText = "";
-    createPage.createSideBar();
+    createPage.resetSection(sidebar, createPage.createSideBar);
   }
 
   return {
@@ -170,7 +167,6 @@ const switchTabs = (() => {
     assignLinks,
     addTaskEventListener,
     removeCardListener,
-    addSidebarEventListeners,
     addProjectListeners,
   };
 })();

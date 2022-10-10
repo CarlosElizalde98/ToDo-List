@@ -27,6 +27,23 @@ const createPage = (() => {
     const today = addProjectButton("Today");
     const thisWeek = addProjectButton("This Week");
 
+    const projects = createProjectSection();
+    sidebarContent.appendChild(inbox);
+    sidebarContent.appendChild(today);
+    sidebarContent.appendChild(thisWeek);
+
+    sideBar.appendChild(sidebarContent);
+    sideBar.appendChild(projects);
+    body.appendChild(sideBar);
+
+    populateProjects(toDo.checkProjectLocalStorage());
+    switchTabs.addProjectListeners();
+  };
+
+  const createProjectSection = () => {
+    const form = createForms.createProjectForm();
+    const projects = document.createElement("section");
+    projects.classList.add("project-content");
     const sidebarHeading = document.createElement("h2");
     sidebarHeading.textContent = "Projects";
     sidebarHeading.classList.add("inbox-header");
@@ -34,21 +51,11 @@ const createPage = (() => {
     const taskButton = addProjectButton("Add Project");
     taskButton.setAttribute("id", "add-sidebar-form");
 
-    const form = createForms.createProjectForm();
+    projects.appendChild(sidebarHeading);
+    projects.appendChild(taskButton);
+    projects.appendChild(form);
 
-    sidebarContent.appendChild(inbox);
-    sidebarContent.appendChild(today);
-    sidebarContent.appendChild(thisWeek);
-    sidebarContent.appendChild(sidebarHeading);
-    sidebarContent.appendChild(taskButton);
-    sidebarContent.appendChild(form);
-
-    sideBar.appendChild(sidebarContent);
-    body.appendChild(sideBar);
-
-    populateProjects(toDo.checkProjectLocalStorage());
-    switchTabs.assignLinks();
-    switchTabs.addSidebarEventListeners();
+    return projects;
   };
 
   const createInbox = () => {
@@ -67,6 +74,7 @@ const createPage = (() => {
     inbox.appendChild(taskButton);
 
     body.appendChild(inbox);
+    switchTabs.assignLinks();
     populateInbox(toDo.checkCardLocalStorage());
   };
 
@@ -153,7 +161,7 @@ const createPage = (() => {
 
     const removeBtn = document.createElement("button");
     removeBtn.classList.add("remove-project-button");
-    removeBtn.setAttribute("id", projectObj.title);
+    removeBtn.setAttribute("id", projectObj.id);
     removeBtn.textContent = "X";
     option.appendChild(removeBtn);
 
@@ -210,13 +218,13 @@ const createPage = (() => {
 
   const addUserProject = (projectObj) => {
     const newItem = createProjectCard(projectObj);
-    const sidebarContent = document.querySelector(".sidebar-content");
-    const addTask = document.querySelector(".add-sidebar-form");
+    const sidebarContent = document.querySelector(".project-content");
+
     newItem.addEventListener("click", () => {
       switchTabs.switchTab(projectObj.id);
     });
 
-    sidebarContent.insertBefore(newItem, addTask);
+    sidebarContent.appendChild(newItem);
   };
 
   const showProjectFormPopup = () => {
@@ -242,9 +250,15 @@ const createPage = (() => {
     });
   };
 
+  const resetSection = (section, callback) => {
+    section.innerText = "";
+    callback();
+  };
+
   return {
     createNavBar,
     createSideBar,
+    createProjectSection,
     createInbox,
     addSidebarItem,
     addDefaultInboxItem,
@@ -255,6 +269,8 @@ const createPage = (() => {
     addUserProject,
     showProjectFormPopup,
     hideProjectFormPopup,
+    populateProjects,
+    resetSection,
   };
 })();
 
