@@ -49,6 +49,7 @@ const createPage = (() => {
     checkProjectLocalStorage();
     switchTabs.assignLinks();
     switchTabs.addSidebarEventListeners();
+    switchTabs.addProjectListeners();
   };
 
   const createInbox = () => {
@@ -182,6 +183,7 @@ const createPage = (() => {
     const addTask = document.querySelector(".add-sidebar-form");
     newItem.addEventListener("click", () => {
       switchTabs.switchTab(projectObj.id);
+      switchTabs.addSidebarEventListeners();
     });
 
     sidebarContent.insertBefore(newItem, addTask);

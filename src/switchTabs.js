@@ -32,23 +32,21 @@ const switchTabs = (() => {
   const assignLinks = () => {
     const items = document.querySelectorAll(".sidebar-item");
     items.forEach((item) => {
-      item.addEventListener("click", () => {
+      item.addEventListener("click", (e) => {
         switchTab(item.getAttribute("name"));
       });
     });
   };
 
   function addSidebarEventListeners() {
+    console.trace();
     const sidebar = document.querySelector(".sidebar-content");
     // Listens for Add Project Button being pressed.
-
-    addProjectListeners();
 
     const removeBtn = document.querySelectorAll(".remove-project-button");
     if (removeBtn) {
       removeBtn.forEach((btn) => {
-        btn.addEventListener("click", (event) => {
-          event.preventDefault();
+        btn.addEventListener("click", () => {
           _handleProjectRemoval(sidebar, btn);
         });
       });
@@ -56,9 +54,13 @@ const switchTabs = (() => {
   }
 
   function addProjectListeners() {
-    createPage.showProjectFormPopup();
     const projCancelBtn = document.querySelector(".cancel-btn");
     const projSubmitBtn = document.querySelector(".submit-btn");
+    const addProjectBtn = document.getElementById("add-sidebar-form");
+
+    addProjectBtn.addEventListener("click", () => {
+      createPage.showProjectFormPopup();
+    });
 
     projCancelBtn.addEventListener("click", (event) => {
       event.preventDefault();
@@ -67,8 +69,9 @@ const switchTabs = (() => {
 
     projSubmitBtn.addEventListener("click", (event) => {
       event.preventDefault();
-      const projectTitle = document.getElementById("project-title").value;
-      handleSubmit(projectTitle);
+      const projectTitle = document.getElementById("project-title");
+      handleSubmit(projectTitle.value);
+      projectTitle.value = "";
     });
   }
 
@@ -158,7 +161,7 @@ const switchTabs = (() => {
   function _handleProjectRemoval(sidebar, removeBtn) {
     const indexPlace = removeBtn.getAttribute("id");
     toDo.removeTaskData(indexPlace);
-    sidebar.textContent = "";
+    sidebar.innerText = "";
     createPage.createSideBar();
   }
 
@@ -168,6 +171,7 @@ const switchTabs = (() => {
     addTaskEventListener,
     removeCardListener,
     addSidebarEventListeners,
+    addProjectListeners,
   };
 })();
 
