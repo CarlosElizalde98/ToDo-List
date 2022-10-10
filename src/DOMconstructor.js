@@ -74,7 +74,6 @@ const createPage = (() => {
     inbox.appendChild(taskButton);
 
     body.appendChild(inbox);
-    switchTabs.assignLinks();
     populateInbox(toDo.checkCardLocalStorage());
   };
 

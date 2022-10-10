@@ -29,21 +29,18 @@ const switchTabs = (() => {
     return inboxHeader;
   }
 
-  const assignLinks = () => {
+  function addProjectListeners() {
+    const projCancelBtn = document.querySelector(".cancel-btn");
+    const projSubmitBtn = document.querySelector(".submit-btn");
+    const addProjectBtn = document.getElementById("add-sidebar-form");
+    const projects = document.querySelector(".project-content");
+
     const items = document.querySelectorAll(".sidebar-item-heading");
     items.forEach((item) => {
       item.addEventListener("click", (e) => {
         switchTab(item.getAttribute("name"));
       });
     });
-  };
-
-  function addProjectListeners() {
-    const projCancelBtn = document.querySelector(".cancel-btn");
-    const projSubmitBtn = document.querySelector(".submit-btn");
-    const addProjectBtn = document.getElementById("add-sidebar-form");
-    const projects = document.querySelector(".project-content");
-    // Listens for Add Project Button being pressed.
 
     const removeBtn = document.querySelectorAll(".remove-project-button");
     if (removeBtn) {
@@ -164,7 +161,6 @@ const switchTabs = (() => {
 
   return {
     switchTab,
-    assignLinks,
     addTaskEventListener,
     removeCardListener,
     addProjectListeners,
