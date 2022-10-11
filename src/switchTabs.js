@@ -33,11 +33,7 @@ const switchTabs = (() => {
     const projCancelBtn = document.querySelector(".cancel-btn");
     const projSubmitBtn = document.querySelector(".submit-btn");
     const addProjectBtn = document.getElementById("add-sidebar-form");
-
-    const items = document.querySelectorAll(".sidebar-item-heading");
-    items.forEach((item) => {
-      addSwitchTabListener(item);
-    });
+    const projectSection = document.querySelector(".project-content");
 
     addProjectBtn.addEventListener("click", (event) => {
       event.preventDefault();
@@ -52,7 +48,7 @@ const switchTabs = (() => {
     projSubmitBtn.addEventListener("click", (event) => {
       event.preventDefault();
       const projectTitle = document.getElementById("project-title");
-      handleSubmit(projectTitle.value);
+      handleSubmit(projectTitle.value, projectSection);
       projectTitle.value = "";
     });
   }
@@ -69,12 +65,12 @@ const switchTabs = (() => {
     });
   };
 
-  function handleSubmit(projectTitle) {
+  function handleSubmit(projectTitle, section) {
     const id = projectTitle + " Project";
     const newProject = toDo.createProject(projectTitle, id);
     toDo.setTaskData(id, newProject);
     createPage.hideProjectFormPopup();
-    createPage.addUserProject(toDo.getTaskData(id));
+    createPage.addUserProject(toDo.getTaskData(id), section);
   }
 
   function addTaskEventListener() {
@@ -166,6 +162,7 @@ const switchTabs = (() => {
     removeCardListener,
     addProjectListeners,
     addRemoveProjectListener,
+    addSwitchTabListener,
   };
 })();
 

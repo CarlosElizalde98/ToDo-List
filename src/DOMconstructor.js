@@ -18,7 +18,6 @@ const createPage = (() => {
   };
 
   const createSideBar = () => {
-    console.trace();
     const sideBar = document.createElement("div");
     sideBar.classList.add("sidebar-container");
     const sidebarContent = document.createElement("div");
@@ -37,7 +36,7 @@ const createPage = (() => {
     sideBar.appendChild(projects);
     body.appendChild(sideBar);
 
-    populateProjects(toDo.checkProjectLocalStorage());
+    populateProjects(toDo.checkProjectLocalStorage(), projects);
     switchTabs.addProjectListeners();
   };
 
@@ -216,16 +215,12 @@ const createPage = (() => {
     return navbarText;
   }
 
-  const addUserProject = (projectObj) => {
+  const addUserProject = (projectObj, section) => {
     const newItem = createProjectCard(projectObj);
-    const sidebarContent = document.querySelector(".project-content");
     const removeBtn = newItem.children[1];
-    newItem.addEventListener("click", () => {
-      switchTabs.switchTab(projectObj.id);
-    });
-    switchTabs.addRemoveProjectListener(sidebarContent, removeBtn);
-
-    sidebarContent.appendChild(newItem);
+    switchTabs.addSwitchTabListener(newItem.children[0]);
+    switchTabs.addRemoveProjectListener(section, removeBtn);
+    section.appendChild(newItem);
   };
 
   const showProjectFormPopup = () => {
@@ -238,9 +233,9 @@ const createPage = (() => {
     document.getElementById("add-sidebar-form").style.display = "block";
   };
 
-  const populateProjects = (projects) => {
+  const populateProjects = (projects, section) => {
     projects.forEach((project) => {
-      addUserProject(project);
+      addUserProject(project, section);
     });
   };
 
