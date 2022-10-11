@@ -33,23 +33,11 @@ const switchTabs = (() => {
     const projCancelBtn = document.querySelector(".cancel-btn");
     const projSubmitBtn = document.querySelector(".submit-btn");
     const addProjectBtn = document.getElementById("add-sidebar-form");
-    const projects = document.querySelector(".project-content");
 
     const items = document.querySelectorAll(".sidebar-item-heading");
     items.forEach((item) => {
-      item.addEventListener("click", (e) => {
-        switchTab(item.getAttribute("name"));
-      });
+      addSwitchTabListener(item);
     });
-
-    const removeBtn = document.querySelectorAll(".remove-project-button");
-    if (removeBtn) {
-      removeBtn.forEach((btn) => {
-        btn.addEventListener("click", () => {
-          _handleProjectRemoval(projects, btn);
-        });
-      });
-    }
 
     addProjectBtn.addEventListener("click", (event) => {
       event.preventDefault();
@@ -68,6 +56,18 @@ const switchTabs = (() => {
       projectTitle.value = "";
     });
   }
+
+  const addSwitchTabListener = (item) => {
+    item.addEventListener("click", () => {
+      switchTab(item.innerText);
+    });
+  };
+
+  const addRemoveProjectListener = (projects, button) => {
+    button.addEventListener("click", () => {
+      _handleProjectRemoval(projects, button);
+    });
+  };
 
   function handleSubmit(projectTitle) {
     const id = projectTitle + " Project";
@@ -157,6 +157,7 @@ const switchTabs = (() => {
 
     toDo.removeTaskData(indexPlace);
     createPage.resetSection(sidebar, createPage.createSideBar);
+    switchTab("Inbox");
   }
 
   return {
@@ -164,6 +165,7 @@ const switchTabs = (() => {
     addTaskEventListener,
     removeCardListener,
     addProjectListeners,
+    addRemoveProjectListener,
   };
 })();
 

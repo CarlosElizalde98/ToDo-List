@@ -8,8 +8,5 @@ const constructPage = (() => {
   createPage.createSideBar();
   createPage.createInbox();
 
-  // switchTabs.switchTab('Inbox');
-  switchTabs.assignLinks();
-
   switchTabs.addTaskEventListener();
 })();

@@ -18,6 +18,7 @@ const createPage = (() => {
   };
 
   const createSideBar = () => {
+    console.trace();
     const sideBar = document.createElement("div");
     sideBar.classList.add("sidebar-container");
     const sidebarContent = document.createElement("div");
@@ -218,10 +219,11 @@ const createPage = (() => {
   const addUserProject = (projectObj) => {
     const newItem = createProjectCard(projectObj);
     const sidebarContent = document.querySelector(".project-content");
-
+    const removeBtn = newItem.children[1];
     newItem.addEventListener("click", () => {
       switchTabs.switchTab(projectObj.id);
     });
+    switchTabs.addRemoveProjectListener(sidebarContent, removeBtn);
 
     sidebarContent.appendChild(newItem);
   };
