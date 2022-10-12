@@ -27,6 +27,10 @@ const createPage = (() => {
     const today = addProjectButton("Today");
     const thisWeek = addProjectButton("This Week");
 
+    switchTabs.addSwitchTabListener(inbox);
+    switchTabs.addSwitchTabListener(today);
+    switchTabs.addSwitchTabListener(thisWeek);
+
     const projects = createProjectSection();
     sidebarContent.appendChild(inbox);
     sidebarContent.appendChild(today);
