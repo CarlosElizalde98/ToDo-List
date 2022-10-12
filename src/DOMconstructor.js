@@ -101,8 +101,16 @@ const createPage = (() => {
   const addDefaultInboxItem = (inbox, header) => {
     const taskButton = addInboxButton("Add Task");
     taskButton.classList.add("add-taskform");
-
     inbox.appendChild(header);
+
+    let tasks = toDo.checkCardLocalStorage();
+    if (tasks.length > 0) {
+      tasks.map((task) => {
+        let taskCard = createTaskCard(task);
+        inbox.appendChild(taskCard);
+      });
+      switchTabs.removeCardListener();
+    }
     inbox.appendChild(taskButton);
   };
 

@@ -127,7 +127,6 @@ const switchTabs = (() => {
     const dueDate = document.getElementById("dueDate").value;
     const priority = document.getElementById("priorities-datalist").value;
     const location = document.getElementById("container-header").value;
-    console.log(location);
 
     const newTask = toDo.createTask(
       title,
@@ -141,7 +140,7 @@ const switchTabs = (() => {
     addTask.classList.toggle("item-form-popup");
 
     toDo.setTaskData(title, newTask);
-    const taskCard = createTaskCard(newTask);
+    const taskCard = createPage.createTaskCard(newTask);
     // taskFormContainer.reset()
     addTask.classList.remove("item-form-popup");
     taskForm.classList.remove("item-form-popup-active");

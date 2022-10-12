@@ -198,18 +198,22 @@ input[type="text"] {
   font-size: 1.2rem;
   font-weight: bold;
   padding-left: 1%;
+  max-width: 1rem;
 }
 
 .taskcard-description {
-  flex: 1 0 auto;
+  flex: 1 1 auto;
+  max-width: 200px;
 }
 
 .taskcard-date {
-  flex: 1 0 auto;
+  flex: 1 1 auto;
+  max-width: 100px;
 }
 
 .taskcard-priority {
-  flex: 1 0 auto;
+  flex: 1 1 auto;
+  max-width: 100px;
 }
 
 .remove-card-btn,
