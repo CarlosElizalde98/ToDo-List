@@ -1,5 +1,5 @@
 import { switchTabs } from "./switchTabs.js";
-import { toDo } from "./toDoConstructor.js";
+import { toDo, project } from "./toDoConstructor.js";
 
 const createPage = (() => {
   const body = document.querySelector("#content");
@@ -40,7 +40,7 @@ const createPage = (() => {
     sideBar.appendChild(projects);
     body.appendChild(sideBar);
 
-    populateProjects(toDo.checkProjectLocalStorage(), projects);
+    populateProjects(project.checkProjectLocalStorage(), projects);
     switchTabs.addProjectListeners();
   };
 
@@ -78,7 +78,15 @@ const createPage = (() => {
     inbox.appendChild(taskButton);
 
     body.appendChild(inbox);
-    populateInbox(toDo.checkCardLocalStorage());
+    if (localStorage.length === 0) {
+      let tasks = [];
+      project.createProject(header.value, header.value, tasks);
+    }
+    if (localStorage.length !== 0) {
+      populateInbox(
+        project.getProjectCards(project.getProject(header.textContent))
+      );
+    }
   };
 
   const addSidebarItem = (item) => {
@@ -103,7 +111,7 @@ const createPage = (() => {
     taskButton.classList.add("add-taskform");
     inbox.appendChild(header);
 
-    let tasks = toDo.checkCardLocalStorage();
+    let tasks = project.getProjectCards(project.getProject(header.textContent));
     if (tasks.length > 0) {
       tasks.map((task) => {
         let taskCard = createTaskCard(task);
@@ -116,16 +124,21 @@ const createPage = (() => {
 
   const addScheduledItems = (inbox, header) => {
     inbox.appendChild(header);
+
     let title = header.textContent;
+
     for (let i = 0; i < localStorage.length; i++) {
-      let taskObject = toDo.getTaskData(localStorage.key(i));
-      if (taskObject.hasOwnProperty("dueDate")) {
-        const result = toDo.checkTaskCardDate(title, taskObject);
-        if (result != null) {
-          const card = createTaskCard(result);
-          addScheduledCard(inbox, card);
+      let tasks = project.getProjectCards(toDo.getTaskData(title));
+
+      tasks.map((task) => {
+        if (task.hasOwnProperty("dueDate")) {
+          const result = project.checkProjectTaskDate(task);
+          if (result !== null) {
+            const card = createTaskCard(result);
+            addScheduledCard(inbox, card);
+          }
         }
-      }
+      });
     }
   };
 

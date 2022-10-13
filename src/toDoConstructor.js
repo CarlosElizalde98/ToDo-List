@@ -5,45 +5,45 @@ const toDo = (() => {
     return { title, description, dueDate, priority, location };
   };
 
-  const project = (title, id) => {
-    return { title, id };
-  };
+  // const project = (title, id) => {
+  //   return { title, id };
+  // };
 
   function createTask(title, description, dueDate, priority, location) {
     const item = toDoItem(title, description, dueDate, priority, location);
     return item;
   }
 
-  function createProject(title, id) {
-    const newProject = project(title, id);
-    return newProject;
-  }
+  // function createProject(title, id) {
+  //   const newProject = project(title, id);
+  //   return newProject;
+  // }
 
-  const checkCardLocalStorage = () => {
-    let cardArray = [];
-    if (localStorage.length > 0) {
-      for (let i = 0; i < localStorage.length; i++) {
-        if (!localStorage.key(i).includes("Project")) {
-          let key = localStorage.key(i);
-          cardArray.push(getTaskData(key));
-        }
-      }
-    }
-    return cardArray;
-  };
+  // const checkCardLocalStorage = () => {
+  //   let cardArray = [];
+  //   if (localStorage.length > 0) {
+  //     for (let i = 0; i < localStorage.length; i++) {
+  //       if (!localStorage.key(i).includes("Project")) {
+  //         let key = localStorage.key(i);
+  //         cardArray.push(getTaskData(key));
+  //       }
+  //     }
+  //   }
+  //   return cardArray;
+  // };
 
-  const checkProjectLocalStorage = () => {
-    let projArray = [];
-    if (localStorage.length > 0) {
-      for (let i = 0; i < localStorage.length; i++) {
-        if (localStorage.key(i).includes("Project")) {
-          let key = localStorage.key(i);
-          projArray.push(getTaskData(key));
-        }
-      }
-    }
-    return projArray;
-  };
+  // const checkProjectLocalStorage = () => {
+  //   let projArray = [];
+  //   if (localStorage.length > 0) {
+  //     for (let i = 0; i < localStorage.length; i++) {
+  //       if (localStorage.key(i).includes("Project")) {
+  //         let key = localStorage.key(i);
+  //         projArray.push(getTaskData(key));
+  //       }
+  //     }
+  //   }
+  //   return projArray;
+  // };
 
   const setTaskData = (title, taskCard) => {
     localStorage.setItem(title, JSON.stringify(taskCard));
@@ -58,7 +58,7 @@ const toDo = (() => {
     localStorage.removeItem(title);
   }
 
-  function checkTaskCardDate(title, taskObject) {
+  function checkTaskCardDate(taskObject) {
     if (title === "Today") {
       let date = parse(taskObject.dueDate, "yyyy-MM-dd", new Date());
       if (isToday(date)) {
@@ -78,13 +78,96 @@ const toDo = (() => {
 
   return {
     createTask,
-    createProject,
-    checkProjectLocalStorage,
+    // createProject,
+    // checkProjectLocalStorage,
     setTaskData,
     getTaskData,
     removeTaskData,
     checkTaskCardDate,
-    checkCardLocalStorage,
+    // checkCardLocalStorage,
   };
 })();
-export { toDo };
+
+const project = (() => {
+  const projectItem = (title, id, tasks) => {
+    return { title, id, tasks };
+  };
+
+  const createProject = (title, id, tasks) => {
+    return projectItem(title, id, tasks);
+  };
+
+  const getProject = (value) => {
+    return toDo.getTaskData(value);
+  };
+
+  const addTaskToProject = (task, project) => {
+    project.tasks.push(task);
+    updateLocalStorage(project);
+  };
+
+  const removeTask = (task, project) => {
+    let updatedArr = project.tasks.filter((item) => item !== task);
+    let updatedProj = { ...project, tasks: updatedArr };
+    updateLocalStorage(updatedProj);
+  };
+
+  const removeProject = (project) => {
+    toDo.removeTaskData(project.title);
+  };
+
+  const updateLocalStorage = (project) => {
+    if (localStorage.getItem(project.title) !== null) {
+      toDo.removeTaskData(project.title);
+    }
+    toDo.setTaskData(project.title, project);
+  };
+
+  const checkProjectLocalStorage = () => {
+    let projArray = [];
+    if (localStorage.length > 0) {
+      for (let i = 0; i < localStorage.length; i++) {
+        let key = localStorage.key(i);
+        projArray.push(toDo.getTaskData(key));
+      }
+    }
+    return projArray;
+  };
+
+  const getProjectCards = (project) => {
+    let tasks = project.tasks;
+    return tasks;
+  };
+
+  const getProjectTask = (item, project) => {
+    let taskObject = {};
+    let tasks = getProjectCards(project);
+    tasks.map((task) => {
+      if (item === task.title) {
+        taskObject = { ...task };
+      }
+    });
+    return taskObject;
+  };
+
+  const checkProjectTaskDate = (projectTask) => {
+    const result = toDo.checkTaskCardDate(projectTask.title, projectTask);
+    console.log(result);
+    return result;
+  };
+
+  return {
+    getProject,
+    createProject,
+    addTaskToProject,
+    addTaskToProject,
+    removeTask,
+    getProjectCards,
+    checkProjectLocalStorage,
+    removeProject,
+    getProjectTask,
+    updateLocalStorage,
+    checkProjectTaskDate,
+  };
+})();
+export { toDo, project };

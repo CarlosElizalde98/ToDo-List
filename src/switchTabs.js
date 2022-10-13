@@ -1,5 +1,5 @@
 import { createPage, createForms } from "./DOMconstructor.js";
-import { toDo } from "./toDoConstructor.js";
+import { toDo, project } from "./toDoConstructor.js";
 
 const switchTabs = (() => {
   const switchTab = (item) => {
@@ -67,7 +67,8 @@ const switchTabs = (() => {
 
   function handleSubmit(projectTitle, section) {
     const id = projectTitle + " Project";
-    const newProject = toDo.createProject(projectTitle, id);
+    const tasks = [];
+    const newProject = project.createProject(projectTitle, id, tasks);
     toDo.setTaskData(id, newProject);
     createPage.hideProjectFormPopup();
     createPage.addUserProject(toDo.getTaskData(id), section);
@@ -114,14 +115,19 @@ const switchTabs = (() => {
         e.preventDefault();
         btn.classList.add("active");
         let btnIndexPlace = btn.getAttribute("value");
+        let task = project.getProjectTask(
+          btnIndexPlace,
+          project.getProject(currentPage.value)
+        );
         const currentPage = document.querySelector(".container-header");
-        toDo.removeTaskData(btnIndexPlace);
+        project.removeTask(task, project.getProject(currentPage.value));
         switchTabs.switchTab(currentPage.textContent);
       });
     });
   }
 
   function _submitTaskInfo(addTask, taskForm, inbox) {
+    let projectName = document.querySelector(".container-header").textContent;
     const title = document.getElementById("title").value;
     const description = document.getElementById("description").value;
     const dueDate = document.getElementById("dueDate").value;
@@ -139,7 +145,7 @@ const switchTabs = (() => {
     inbox.removeChild(inbox.lastElementChild);
     addTask.classList.toggle("item-form-popup");
 
-    toDo.setTaskData(title, newTask);
+    project.addTaskToProject(newTask, project.getProject(projectName));
     const taskCard = createPage.createTaskCard(newTask);
     // taskFormContainer.reset()
     addTask.classList.remove("item-form-popup");
@@ -149,8 +155,7 @@ const switchTabs = (() => {
 
   function _handleProjectRemoval(sidebar, removeBtn) {
     const indexPlace = removeBtn.getAttribute("id");
-
-    toDo.removeTaskData(indexPlace);
+    project.removeProject(indexPlace);
     createPage.resetSection(sidebar, createPage.createSideBar);
     switchTab("Inbox");
   }
