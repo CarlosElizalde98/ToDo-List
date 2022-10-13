@@ -183,6 +183,9 @@ const createPage = (() => {
     const taskCard = document.createElement("div");
     taskCard.classList.add("task-card-container");
 
+    const leftPanel = document.createElement("div");
+    leftPanel.classList.add("left-panel");
+
     const checkBox = document.createElement("input");
     checkBox.setAttribute("type", "checkbox");
     checkBox.setAttribute("id", "completed-check");
@@ -197,6 +200,8 @@ const createPage = (() => {
     // taskCardDesc.setAttribute('id', taskObject.description);
     taskCardDesc.textContent = taskObject.description;
 
+    const rightPanel = document.createElement("div");
+    rightPanel.classList.add("right-panel");
     const taskCardDate = document.createElement("p");
     taskCardDate.classList.add("taskcard-date");
     taskCardDate.textContent = taskObject.dueDate;
@@ -211,12 +216,18 @@ const createPage = (() => {
     removeTaskCardBtn.setAttribute("value", taskObject.title);
     removeTaskCardBtn.textContent = "X";
 
-    taskCard.appendChild(checkBox);
-    taskCard.appendChild(taskCardTitle);
-    taskCard.appendChild(taskCardDesc);
-    taskCard.appendChild(taskCardDate);
-    taskCard.appendChild(taskCardPriority);
-    taskCard.appendChild(removeTaskCardBtn);
+    leftPanel.appendChild(checkBox);
+    leftPanel.appendChild(taskCardTitle);
+    leftPanel.appendChild(taskCardDesc);
+    taskCard.appendChild(leftPanel);
+
+    rightPanel.appendChild(taskCardDate);
+    rightPanel.appendChild(taskCardPriority);
+    rightPanel.appendChild(removeTaskCardBtn);
+    taskCard.appendChild(rightPanel);
+    // taskCard.appendChild(taskCardDate);
+    // taskCard.appendChild(taskCardPriority);
+    // taskCard.appendChild(removeTaskCardBtn);
 
     return taskCard;
   }

@@ -179,7 +179,7 @@ input[type="text"] {
 
 .task-card-container {
   display: flex;
-  justify-content: space-evenly;
+  justify-content: space-between;
   margin: 12px;
   padding: 12px;
   align-items: center;
@@ -193,27 +193,37 @@ input[type="text"] {
   background-color: green;
 }
 
+.left-panel,
+.right-panel {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
 .taskcard-title {
-  flex: 1 0 auto;
+  display: flex;
+  align-items: center;
   font-size: 1.2rem;
   font-weight: bold;
-  padding-left: 1%;
-  max-width: 1rem;
+  margin: 1em;
 }
 
 .taskcard-description {
   flex: 1 1 auto;
   max-width: 200px;
+  margin: 1em;
 }
 
 .taskcard-date {
   flex: 1 1 auto;
   max-width: 100px;
+  margin: 1em;
 }
 
 .taskcard-priority {
   flex: 1 1 auto;
   max-width: 100px;
+  margin: 1em;
 }
 
 .remove-card-btn,
