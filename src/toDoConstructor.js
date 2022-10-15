@@ -50,8 +50,11 @@ const toDo = (() => {
   };
 
   function getTaskData(title) {
-    const myTaskCard = JSON.parse(localStorage.getItem(title));
-    return myTaskCard;
+    if (localStorage.getItem(title) !== null) {
+      const myTaskCard = JSON.parse(localStorage.getItem(title));
+      return myTaskCard;
+    }
+    return null;
   }
 
   function removeTaskData(title) {

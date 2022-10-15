@@ -155,7 +155,8 @@ const switchTabs = (() => {
 
   function _handleProjectRemoval(sidebar, removeBtn) {
     const indexPlace = removeBtn.getAttribute("id");
-    project.removeProject(indexPlace);
+    console.log(project.getProject(indexPlace));
+    project.removeProject(project.getProject(indexPlace));
     createPage.resetSection(sidebar, createPage.createSideBar);
     switchTab("Inbox");
   }
