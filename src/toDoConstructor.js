@@ -72,20 +72,20 @@ const project = (() => {
   };
 
   const removeTask = (task, project) => {
-    let updatedArr = project.tasks.filter((item) => item !== task);
+    let updatedArr = project.tasks.filter((item) => item.title !== task.title);
     let updatedProj = { ...project, tasks: updatedArr };
     updateLocalStorage(updatedProj);
   };
 
   const removeProject = (project) => {
-    toDo.removeTaskData(project.title);
+    toDo.removeTaskData(project.id);
   };
 
   const updateLocalStorage = (project) => {
-    if (localStorage.getItem(project.title) !== null) {
-      toDo.removeTaskData(project.title);
+    if (localStorage.getItem(project.id) !== null) {
+      toDo.removeTaskData(project.id);
     }
-    toDo.setTaskData(project.title, project);
+    toDo.setTaskData(project.id, project);
   };
 
   const checkProjectLocalStorage = () => {
@@ -116,7 +116,7 @@ const project = (() => {
   };
 
   const checkProjectTaskDate = (projectTask) => {
-    const result = toDo.checkTaskCardDate(projectTask.title, projectTask);
+    const result = toDo.checkTaskCardDate(projectTask.id, projectTask);
     console.log(result);
     return result;
   };

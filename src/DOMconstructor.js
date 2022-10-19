@@ -40,7 +40,9 @@ const createPage = (() => {
     sideBar.appendChild(projects);
     body.appendChild(sideBar);
 
-    populateProjects(project.checkProjectLocalStorage(), projects);
+    if (project.checkProjectLocalStorage().length > 0) {
+      populateProjects(project.checkProjectLocalStorage(), projects);
+    }
     switchTabs.addProjectListeners();
   };
 
@@ -88,9 +90,14 @@ const createPage = (() => {
       project.updateLocalStorage(initialProj);
     }
     if (localStorage.length !== 0) {
-      populateInbox(
-        project.getProjectCards(project.getProject(header.textContent))
-      );
+      if (project.getProject(header.textContent) !== null) {
+        let cards = project.getProjectCards(
+          project.getProject(header.textContent)
+        );
+        if (cards.length > 0) {
+          populateInbox(cards);
+        }
+      }
     }
   };
 
@@ -115,14 +122,16 @@ const createPage = (() => {
     const taskButton = addInboxButton("Add Task");
     taskButton.classList.add("add-taskform");
     inbox.appendChild(header);
-
-    let tasks = project.getProjectCards(project.getProject(header.textContent));
-    if (tasks.length > 0) {
-      tasks.map((task) => {
-        let taskCard = createTaskCard(task);
-        inbox.appendChild(taskCard);
-      });
-      switchTabs.removeCardListener();
+    let proj = project.getProject(header.textContent);
+    if (proj !== null) {
+      let tasks = project.getProjectCards(proj);
+      if (tasks.length > 0) {
+        tasks.map((task) => {
+          let taskCard = createTaskCard(task);
+          inbox.appendChild(taskCard);
+        });
+        switchTabs.removeCardListener();
+      }
     }
     inbox.appendChild(taskButton);
   };
@@ -183,7 +192,7 @@ const createPage = (() => {
   function createProjectCard(projectObj) {
     const option = document.createElement("div");
     option.classList.add("sidebar-item");
-    option.setAttribute("name", projectObj.title);
+    option.setAttribute("name", projectObj.id);
     const optionText = document.createElement("p");
     optionText.classList.add("sidebar-item-heading");
     optionText.textContent = projectObj.id;

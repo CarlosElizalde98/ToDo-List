@@ -109,7 +109,7 @@ const switchTabs = (() => {
 
   function removeCardListener() {
     const removeCardBtn = document.querySelectorAll(".remove-card-btn");
-
+    const currentPage = document.querySelector(".container-header").textContent;
     removeCardBtn.forEach((btn) => {
       btn.addEventListener("click", (e) => {
         e.preventDefault();
@@ -117,11 +117,11 @@ const switchTabs = (() => {
         let btnIndexPlace = btn.getAttribute("value");
         let task = project.getProjectTask(
           btnIndexPlace,
-          project.getProject(currentPage.value)
+          project.getProject(currentPage)
         );
-        const currentPage = document.querySelector(".container-header");
-        project.removeTask(task, project.getProject(currentPage.value));
-        switchTabs.switchTab(currentPage.textContent);
+        let selectedProj = project.getProject(currentPage);
+        project.removeTask(task, selectedProj);
+        switchTabs.switchTab(currentPage);
       });
     });
   }
@@ -155,7 +155,7 @@ const switchTabs = (() => {
 
   function _handleProjectRemoval(sidebar, removeBtn) {
     const indexPlace = removeBtn.getAttribute("id");
-    console.log(project.getProject(indexPlace));
+    console.log(indexPlace);
     project.removeProject(project.getProject(indexPlace));
     createPage.resetSection(sidebar, createPage.createSideBar);
     switchTab("Inbox");
