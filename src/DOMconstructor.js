@@ -138,22 +138,20 @@ const createPage = (() => {
 
   const addScheduledItems = (inbox, header) => {
     inbox.appendChild(header);
-
     let title = header.textContent;
-    if (toDo.getTaskData(title) !== null) {
-      for (let i = 0; i < localStorage.length; i++) {
-        let tasks = project.getProjectCards(toDo.getTaskData(title));
+    for (let i = 0; i < localStorage.length; i++) {
+      let key = localStorage.key(i);
+      let title = project.getProject(key);
+      let tasks = project.getProjectCards(title);
 
-        tasks.map((task) => {
-          if (task.hasOwnProperty("dueDate")) {
-            const result = project.checkProjectTaskDate(task);
-            if (result !== null) {
-              const card = createTaskCard(result);
-              addScheduledCard(inbox, card);
-            }
-          }
-        });
-      }
+      tasks.forEach((task) => {
+        const result = project.checkProjectTaskDate(task);
+
+        if (result !== null) {
+          const card = createTaskCard(result);
+          addScheduledCard(inbox, card);
+        }
+      });
     }
   };
 
@@ -286,7 +284,9 @@ const createPage = (() => {
 
   const populateProjects = (projects, section) => {
     projects.forEach((project) => {
-      addUserProject(project, section);
+      if (project.title !== "Inbox") {
+        addUserProject(project, section);
+      }
     });
   };
 

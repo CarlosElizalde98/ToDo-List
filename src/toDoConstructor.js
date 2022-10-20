@@ -27,21 +27,17 @@ const toDo = (() => {
   }
 
   function checkTaskCardDate(taskObject) {
-    if (title === "Today") {
+    if (taskObject.dueDate !== "") {
       let date = parse(taskObject.dueDate, "yyyy-MM-dd", new Date());
       if (isToday(date)) {
         let todaysCard = taskObject;
         return todaysCard;
-      }
-    } else if (title === "This Week") {
-      let date = parse(taskObject.dueDate, "yyyy-MM-dd", new Date());
-      if (isThisWeek(date)) {
+      } else if (isThisWeek(date)) {
         let thisWeek = taskObject;
         return thisWeek;
       }
-    } else {
-      return null;
     }
+    return null;
   }
 
   return {
@@ -116,8 +112,8 @@ const project = (() => {
   };
 
   const checkProjectTaskDate = (projectTask) => {
-    const result = toDo.checkTaskCardDate(projectTask.id, projectTask);
-    console.log(result);
+    const result = toDo.checkTaskCardDate(projectTask);
+
     return result;
   };
 

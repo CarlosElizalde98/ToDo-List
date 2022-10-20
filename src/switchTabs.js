@@ -16,7 +16,7 @@ const switchTabs = (() => {
       const inboxHeader = resetDefaultInboxHeader(inbox, item);
       createPage.addScheduledItems(inbox, inboxHeader);
     } else {
-      return null;
+      return;
     }
   };
 
@@ -155,7 +155,7 @@ const switchTabs = (() => {
 
   function _handleProjectRemoval(sidebar, removeBtn) {
     const indexPlace = removeBtn.getAttribute("id");
-    console.log(indexPlace);
+
     project.removeProject(project.getProject(indexPlace));
     createPage.resetSection(sidebar, createPage.createSideBar);
     switchTab("Inbox");
