@@ -146,7 +146,6 @@ const switchTabs = (() => {
     project.checkTasks(newTask);
     project.addTaskToProject(newTask, project.getProject(projectName));
     const taskCard = createPage.createTaskCard(newTask);
-    // taskFormContainer.reset()
     addTask.classList.remove("item-form-popup");
     taskForm.classList.remove("item-form-popup-active");
     createPage.addDefaultTaskCard(taskCard);

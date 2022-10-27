@@ -130,25 +130,6 @@ const createPage = (() => {
     inbox.appendChild(taskButton);
   };
 
-  const addScheduledItems = (inbox, header) => {
-    inbox.appendChild(header);
-
-    for (let i = 0; i < localStorage.length; i++) {
-      let key = localStorage.key(i);
-      let title = project.getProject(key);
-      let tasks = project.getProjectCards(title);
-      tasks.forEach((task) => project.checkTasks(task, title));
-    }
-
-    let selected = project.getProject(header.textContent);
-    populateInbox(selected.tasks);
-  };
-
-  const addScheduledCard = (inbox, taskCard) => {
-    inbox.appendChild(taskCard);
-    switchTabs.removeCardListener();
-  };
-
   const addDefaultTaskCard = (taskCard) => {
     const inbox = document.querySelector(".inbox-container");
     const taskFormButton = document.querySelector(".add-taskform");
@@ -212,7 +193,6 @@ const createPage = (() => {
 
     const taskCardDesc = document.createElement("p");
     taskCardDesc.classList.add("taskcard-description");
-    // taskCardDesc.setAttribute('id', taskObject.description);
     taskCardDesc.textContent = taskObject.description;
 
     const rightPanel = document.createElement("div");
@@ -240,9 +220,6 @@ const createPage = (() => {
     rightPanel.appendChild(taskCardPriority);
     rightPanel.appendChild(removeTaskCardBtn);
     taskCard.appendChild(rightPanel);
-    // taskCard.appendChild(taskCardDate);
-    // taskCard.appendChild(taskCardPriority);
-    // taskCard.appendChild(removeTaskCardBtn);
 
     return taskCard;
   }
@@ -303,7 +280,6 @@ const createPage = (() => {
     addSidebarItem,
     addDefaultInboxItem,
     addDefaultTaskCard,
-    addScheduledItems,
     createProjectCard,
     createTaskCard,
     addUserProject,
