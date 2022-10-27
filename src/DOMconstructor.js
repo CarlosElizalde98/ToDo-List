@@ -81,13 +81,7 @@ const createPage = (() => {
 
     body.appendChild(inbox);
     if (localStorage.length === 0) {
-      let tasks = [];
-      let initialProj = project.createProject(
-        header.textContent,
-        header.textContent,
-        tasks
-      );
-      project.updateLocalStorage(initialProj);
+      project.initializeProjects();
     }
     if (localStorage.length !== 0) {
       if (project.getProject(header.textContent) !== null) {
@@ -138,21 +132,16 @@ const createPage = (() => {
 
   const addScheduledItems = (inbox, header) => {
     inbox.appendChild(header);
-    let title = header.textContent;
+
     for (let i = 0; i < localStorage.length; i++) {
       let key = localStorage.key(i);
       let title = project.getProject(key);
       let tasks = project.getProjectCards(title);
-
-      tasks.forEach((task) => {
-        const result = project.checkProjectTaskDate(task);
-
-        if (result !== null) {
-          const card = createTaskCard(result);
-          addScheduledCard(inbox, card);
-        }
-      });
+      tasks.forEach((task) => project.checkTasks(task, title));
     }
+
+    let selected = project.getProject(header.textContent);
+    populateInbox(selected.tasks);
   };
 
   const addScheduledCard = (inbox, taskCard) => {
@@ -284,7 +273,11 @@ const createPage = (() => {
 
   const populateProjects = (projects, section) => {
     projects.forEach((project) => {
-      if (project.title !== "Inbox") {
+      if (
+        project.title !== "Inbox" &&
+        project.title !== "Today" &&
+        project.title !== "This Week"
+      ) {
         addUserProject(project, section);
       }
     });

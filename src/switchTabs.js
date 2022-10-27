@@ -14,7 +14,7 @@ const switchTabs = (() => {
       addTaskEventListener();
     } else if (item == "Today" || item == "This Week") {
       const inboxHeader = resetDefaultInboxHeader(inbox, item);
-      createPage.addScheduledItems(inbox, inboxHeader);
+      createPage.addDefaultInboxItem(inbox, inboxHeader);
     } else {
       return;
     }
@@ -144,7 +144,7 @@ const switchTabs = (() => {
 
     inbox.removeChild(inbox.lastElementChild);
     addTask.classList.toggle("item-form-popup");
-
+    project.checkTasks(newTask);
     project.addTaskToProject(newTask, project.getProject(projectName));
     const taskCard = createPage.createTaskCard(newTask);
     // taskFormContainer.reset()

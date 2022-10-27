@@ -26,26 +26,11 @@ const toDo = (() => {
     localStorage.removeItem(title);
   }
 
-  function checkTaskCardDate(taskObject) {
-    if (taskObject.dueDate !== "") {
-      let date = parse(taskObject.dueDate, "yyyy-MM-dd", new Date());
-      if (isToday(date)) {
-        let todaysCard = taskObject;
-        return todaysCard;
-      } else if (isThisWeek(date)) {
-        let thisWeek = taskObject;
-        return thisWeek;
-      }
-    }
-    return null;
-  }
-
   return {
     createTask,
     setTaskData,
     getTaskData,
     removeTaskData,
-    checkTaskCardDate,
   };
 })();
 
@@ -63,7 +48,10 @@ const project = (() => {
   };
 
   const addTaskToProject = (task, project) => {
-    project.tasks.push(task);
+    let taskArr = project.tasks;
+    taskArr.push(task);
+    project.tasks = [...new Set(taskArr)];
+    console.log(project);
     updateLocalStorage(project);
   };
 
@@ -111,10 +99,51 @@ const project = (() => {
     return taskObject;
   };
 
-  const checkProjectTaskDate = (projectTask) => {
-    const result = toDo.checkTaskCardDate(projectTask);
+  const checkProjectTaskDate = (projectTask, project) => {
+    let taskObject = projectTask;
 
-    return result;
+    if (taskObject.dueDate !== "") {
+      let date = parse(taskObject.dueDate, "yyyy-MM-dd", new Date());
+      if (isToday(date)) {
+        let todaysCard = "Today";
+        return todaysCard;
+      } else if (isThisWeek(date)) {
+        let thisWeek = "This Week";
+        return thisWeek;
+      }
+    }
+    return null;
+  };
+
+  const initializeProjects = () => {
+    if (localStorage.length === 0) {
+      let tasks = [];
+      let initialProj = project.createProject("Inbox", "Inbox", tasks);
+      let todayProjects = project.createProject("Today", "Today", tasks);
+      let thisWeeksProjects = project.createProject(
+        "This Week",
+        "This Week",
+        tasks
+      );
+
+      project.updateLocalStorage(initialProj);
+      project.updateLocalStorage(todayProjects);
+      project.updateLocalStorage(thisWeeksProjects);
+    }
+  };
+
+  const checkTasks = (projectTask) => {
+    let result = checkProjectTaskDate(projectTask, project);
+
+    if (result !== null) {
+      if (result === "Today") {
+        let todaysProj = getProject("Today");
+        addTaskToProject(projectTask, todaysProj);
+      } else if (result === "This Week") {
+        let thisWeek = getProject("This Week");
+        addTaskToProject(projectTask, thisWeek);
+      }
+    }
   };
 
   return {
@@ -129,6 +158,8 @@ const project = (() => {
     getProjectTask,
     updateLocalStorage,
     checkProjectTaskDate,
+    initializeProjects,
+    checkTasks,
   };
 })();
 export { toDo, project };
