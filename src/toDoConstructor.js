@@ -51,14 +51,21 @@ const project = (() => {
     let taskArr = project.tasks;
     taskArr.push(task);
     project.tasks = [...new Set(taskArr)];
-    console.log(project);
+
     updateLocalStorage(project);
   };
 
-  const removeTask = (task, project) => {
-    let updatedArr = project.tasks.filter((item) => item.title !== task.title);
-    let updatedProj = { ...project, tasks: updatedArr };
-    updateLocalStorage(updatedProj);
+  const removeTask = (task) => {
+    for (let i = 0; i < localStorage.length; i++) {
+      let key = localStorage.key(i);
+      let selected = project.getProject(key);
+      let updatedArr = selected.tasks.filter(
+        (item) => item.title !== task.title
+      );
+
+      let updatedProj = { ...selected, tasks: updatedArr };
+      updateLocalStorage(updatedProj);
+    }
   };
 
   const removeProject = (project) => {
@@ -77,7 +84,7 @@ const project = (() => {
     if (localStorage.length > 0) {
       for (let i = 0; i < localStorage.length; i++) {
         let key = localStorage.key(i);
-        projArray.push(toDo.getTaskData(key));
+        projArray.push(getProject(key));
       }
     }
     return projArray;

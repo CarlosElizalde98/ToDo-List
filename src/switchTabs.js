@@ -119,8 +119,7 @@ const switchTabs = (() => {
           btnIndexPlace,
           project.getProject(currentPage)
         );
-        let selectedProj = project.getProject(currentPage);
-        project.removeTask(task, selectedProj);
+        project.removeTask(task);
         switchTabs.switchTab(currentPage);
       });
     });
